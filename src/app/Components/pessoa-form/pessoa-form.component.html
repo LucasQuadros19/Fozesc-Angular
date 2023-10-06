@@ -1,0 +1,191 @@
+
+<div>
+    <div *ngIf="mensagem.ativo" class="row">
+      <div class="col-md-12 text-start">
+        <div [ngClass]="mensagem.css" role="alert">
+          <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container mt-5">
+      <div>
+        <form>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-8 mb-3">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  aria-label="Nome"
+                  [disabled]="form === 'excluir' ? disabled : false"
+                  class="form-control"
+                  [(ngModel)]="pessoa.nome"
+                />
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-md-3 mb-3">
+                <input
+                  type="text"
+                  placeholder="RG"
+                  aria-label="Limite"
+                  [disabled]="form === 'excluir' ? disabled : false"
+                  class="form-control"
+                  [(ngModel)]="pessoa.rg"
+                />
+              </div>
+              <div class="col-md-3 mb-3">
+                <input
+                  type="text"
+                  placeholder="CPF"
+                  aria-label="Taxa"
+                  [disabled]="form === 'excluir' ? disabled : false"
+                  class="form-control"
+                  [(ngModel)]="pessoa.cpf"
+                />
+              </div>
+              <div class="col-md-2 mb-3">
+                <input
+                  type="text"
+                  placeholder="N doc"
+                  aria-label="N doc"
+                  [disabled]="form === 'excluir' ? disabled : false"
+                  class="form-control"
+                  [(ngModel)]="pessoa.numeroDoc"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-3 mb-3">
+                <select
+                  class="form-select"
+                  placeholder="N doc"
+                  [(ngModel)]="pessoa.banco"
+                >
+                  <option value="undefined">escolha o Banco</option>
+                  <option *ngFor="let banco of ListaBancos" [value]="banco">
+                    {{ banco }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <select
+                  class="form-select"
+                  placeholder="situacao"
+                  [(ngModel)]="pessoa.situacao"
+                >
+                  <option value="undefined">situacao</option>
+                  <option *ngFor="let situacao of ListaSituacoes" [value]="situacao">
+                    {{ situacao }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-2 mb-3">
+                <input
+                  type="text"
+                  placeholder="Taxa"
+                  aria-label="Taxa"
+                  [disabled]="form === 'excluir' ? disabled : false"
+                  class="form-control"
+                  [(ngModel)]="pessoa.taxa"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-4 mb-3">
+                <input
+                  type="text"
+                  placeholder="Cidade"
+                  aria-label="Cidade"
+                  class="form-control"
+                  [(ngModel)]="pessoa.cidade"
+                />
+              </div>
+              <div class="col-md-4 mb-3">
+                <input
+                  type="text"
+                  placeholder="Bairro"
+                  aria-label="Bairro"
+                  class="form-control"
+                  [(ngModel)]="pessoa.bairro"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-4 mb-3">
+                <input
+                  type="text"
+                  placeholder="Rua"
+                  aria-label="Cidade"
+                  class="form-control"
+                  [(ngModel)]="pessoa.rua"
+                />
+              </div>
+              <div class="col-md-2 mb-3">
+                <input
+                  type="text"
+                  placeholder="Numero"
+                  aria-label="Bairro"
+                  class="form-control"
+                  [(ngModel)]="pessoa.numero"
+                />
+              </div>
+              <div class="col-md-2 mb-3">
+                <input
+                  type="text"
+                  placeholder="Cep"
+                  aria-label="Bairro"
+                  class="form-control"
+                  [(ngModel)]="pessoa.cep"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 offset-md-4">
+        <div class="d-grid gap-2">
+          <a routerLink="/condutor/listar" class="btn btn-info">Voltar</a>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="d-grid gap-2">
+          <button
+            *ngIf="form === undefined"
+            type="button"
+            class="btn btn-success"
+            (click)="onClickCadastrar()"
+          >
+            Cadastrar
+          </button>
+          <button
+            *ngIf="form === 'editar'"
+            type="button"
+            class="btn btn-warning"
+            (click)="onClickEditar()"
+          >
+            Editar
+          </button>
+          <button
+            *ngIf="form === 'excluir'"
+            type="button"
+            class="btn btn-danger"
+            (click)="onClickExcluir()"
+          >
+            Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
