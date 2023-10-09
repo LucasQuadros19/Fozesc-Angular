@@ -1,1 +1,115 @@
-<p>pedido-form works!</p>
+<div>
+    <div *ngIf="mensagem.ativo" class="row">
+      <div class="col-md-12 text-start">
+        <div [ngClass]="mensagem.css" role="alert">
+          <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5">
+      <div>
+        <form id="formulario">
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-5 mb-3">
+                <select class="form-select" data-live-search="true" id="aprovacao" name="aprovacao" [(ngModel)]="pedido.cliente">
+                  <option value="undefined">Pessoa</option>
+                  <option *ngFor="let pess of PessoaList" [ngValue]="pess">{{ pess.nome }}</option>
+                </select>
+              </div>
+              <div class="col-md-3 mb-3">
+                <select class="form-select" placeholder="N doc" [(ngModel)]="pedido.formaPaga">
+                  <option *ngFor="let forma of formas" [ngValue]="forma">{{ forma }}</option>
+                  <option value="undefined">Forma de Pagamento</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-3 mb-3">
+                <input type="text" placeholder="Banco" class="form-control" [(ngModel)]="pedido.valorDoc">
+              </div>
+              <div class="col-md-2 mb-3">
+                <input type="text" placeholder="Agencia" class="form-control" [(ngModel)]="pedido.juros">
+              </div>
+              <div class="col-md-3 mb-3">
+                <input type="text" placeholder="Juros" class="form-control" [(ngModel)]="pedido.juros">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-5 mb-3">
+                <input type="text" placeholder="Numero do Cheque" class="form-control" [(ngModel)]="pedido.quantidade">
+              </div>
+              <div class="col-md-3 mb-3">
+                <input type="date" placeholder="Vencimento" class="form-control" [(ngModel)]="pedido.emitente">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row justify-content-center">
+              <div class="col-md-8 mb-3">
+                <input type="text" placeholder="Observação" aria-label="Observação" class="form-control" [(ngModel)]="pedido.observacao">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 offset-md-6">
+      </div>
+      <div class="col-md-2">
+        <div class="d-grid gap-2">
+          <button *ngIf="form === 'Cheque'" type="button" class="btn btn-secondary" (click)="onClickCadastrarDiario()">Incluir Chueque</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container" style="margin-top: 10px">
+      <div class="row">
+        <div>
+          <table class="carder table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">Doc</th>
+                <th scope="col">Cod.Banco</th>
+                <th scope="col">Num Cheque</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Vencimento</th>
+              </tr>
+            </thead>
+            <tbody class="btn:hover">
+              <tr class="card-hover fundo">
+                <td>1</td>
+                <td>Teste banco</td>
+                <td>teste cheque</td>
+                <td>TEste valor</td>
+                <td>Teste vencimento</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 offset-md-3">
+      
+    </div>
+    <div class="row">
+      <div class="col-md-2 offset-md-6">
+      </div>
+      <div class="col-md-2">
+        <div class="d-grid gap-2">
+          <button *ngIf="form === 'Cheque'" type="button" class="btn btn-secondary" (click)="onClickCadastrarDiario()">Cheque</button>
+          <button *ngIf="form === 'Promissoria'" type="button" class="btn btn-secondary" (click)="onClickCadastrarComposto()">Promissoria</button>
+          <button *ngIf="form === 'Cartao'" type="button" class="btn btn-secondary" (click)="onClickCadastrarSimples()">Cartao</button>
+          <button *ngIf="form === 'editar'" type="button" class="btn btn-warning" (click)="onClickEditar()">Editar</button>
+          <button *ngIf="form === 'excluir'" type="button" class="btn btn-danger" (click)="onClickExcluir()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

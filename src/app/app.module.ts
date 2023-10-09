@@ -8,12 +8,16 @@ import { PedidoFormComponent } from './Components/pedido-form/pedido-form.compon
 
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavComponent } from './Components/nav/nav.component';
+import { PedidoViewComponent } from './Views/pedido-view/pedido-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PessoaFormComponent,
-    PedidoFormComponent
+    PedidoFormComponent,
+    NavComponent,
+    PedidoViewComponent
   ],
   imports: [
     BrowserModule,
