@@ -10,6 +10,13 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './Components/nav/nav.component';
 import { PedidoViewComponent } from './Views/pedido-view/pedido-view.component';
+import { ListaPedidosComponent } from './Views/lista-pedidos/lista-pedidos.component';
+import { ListaPessoasComponent } from './Views/lista-pessoas/lista-pessoas.component';
+import { ListaPedidoPessoasComponent } from './Views/lista-pedido-pessoas/lista-pedido-pessoas.component';
+import { HistoricoComponent } from './Views/historico/historico.component';
+import { TabelaPedidosComponent } from './Components/tabela-pedidos/tabela-pedidos.component';
+import { TabelaPessoasComponent } from './Components/tabela-pessoas/tabela-pessoas.component';
+import { TabelaHistoricoComponent } from './Components/tabela-historico/tabela-historico.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +24,14 @@ import { PedidoViewComponent } from './Views/pedido-view/pedido-view.component';
     PessoaFormComponent,
     PedidoFormComponent,
     NavComponent,
-    PedidoViewComponent
+    PedidoViewComponent,
+    ListaPedidosComponent,
+    ListaPessoasComponent,
+    ListaPedidoPessoasComponent,
+    HistoricoComponent,
+    TabelaPedidosComponent,
+    TabelaPessoasComponent,
+    TabelaHistoricoComponent
   ],
   imports: [
     BrowserModule,

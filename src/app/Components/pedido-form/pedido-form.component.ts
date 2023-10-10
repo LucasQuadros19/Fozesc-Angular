@@ -26,7 +26,7 @@ export class PedidoFormComponent implements OnInit {
   };
   disabled = false;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     if (this.id !== undefined) {
@@ -34,13 +34,16 @@ export class PedidoFormComponent implements OnInit {
     }
     this.ListarPessoa();
   }
+
   get id(): number | undefined {
     return Number(this.route.snapshot.queryParamMap.get('id'));
   }
 
   get form(): string | undefined {
-    return this.route.snapshot.queryParamMap.get('form');
+    const formQueryParam = this.route.snapshot.queryParamMap.get('form');
+    return formQueryParam !== null ? formQueryParam : undefined;
   }
+  
 
 
   onClickCadastrarComposto(): void {
