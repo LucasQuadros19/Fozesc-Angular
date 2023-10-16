@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import PedidoClient from '../client/PedidoClient';
 import { PedidoModel } from '../model/PedidoModel';
 import { HistoricoModel } from '../model/HistoricoModel';
@@ -15,6 +15,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./pedido-form.component.css']
 })
 export class PedidoFormComponent implements OnInit {
+
+  roteador = inject()
+
   pedido: PedidoModel = new PedidoModel();
   PessoaList: any[] = [];
   formas: string[] = Object.values(Forma);
