@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
-import { HistoricoModel } from "../model/HistoricoModel";
+import axios, { AxiosInstance } from 'axios';
+import { HistoricoModel } from '../../model/HistoricoModel';
 
 class HistoricoClient {
   private axiosClient: AxiosInstance;
@@ -7,14 +7,14 @@ class HistoricoClient {
   constructor() {
     this.axiosClient = axios.create({
       baseURL: 'http://localhost:8081/api/historico',
-      headers: { 'Content-type': 'application/json' }
+      headers: { 'Content-type': 'application/json' },
     });
   }
 
-
   public async findById(id: number): Promise<HistoricoModel> {
     try {
-      return (await this.axiosClient.get<HistoricoModel>(`/lista/id/${id}`)).data;
+      return (await this.axiosClient.get<HistoricoModel>(`/lista/id/${id}`))
+        .data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -22,7 +22,9 @@ class HistoricoClient {
 
   public async getParcelasByOperacao(id: number): Promise<HistoricoModel[]> {
     try {
-      return (await this.axiosClient.get<HistoricoModel[]>(`/lista/Parcela/${id}`)).data;
+      return (
+        await this.axiosClient.get<HistoricoModel[]>(`/lista/Parcela/${id}`)
+      ).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

@@ -1,13 +1,6 @@
 
 <div>
-    <div *ngIf="mensagem.ativo" class="row">
-      <div class="col-md-12 text-start">
-        <div [ngClass]="mensagem.css" role="alert">
-          <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
-          <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-      </div>
-    </div>
+  x
   
     <div class="container mt-5">
       <div>
@@ -19,7 +12,7 @@
                   type="text"
                   placeholder="Nome"
                   aria-label="Nome"
-                  [disabled]="form === 'excluir' ? disabled : false"
+
                   class="form-control"
                   [(ngModel)]="pessoa.nome"
                 />
@@ -31,7 +24,7 @@
                   type="text"
                   placeholder="RG"
                   aria-label="Limite"
-                  [disabled]="form === 'excluir' ? disabled : false"
+           
                   class="form-control"
                   [(ngModel)]="pessoa.rg"
                 />
@@ -41,7 +34,7 @@
                   type="text"
                   placeholder="CPF"
                   aria-label="Taxa"
-                  [disabled]="form === 'excluir' ? disabled : false"
+           
                   class="form-control"
                   [(ngModel)]="pessoa.cpf"
                 />
@@ -51,7 +44,7 @@
                   type="text"
                   placeholder="N doc"
                   aria-label="N doc"
-                  [disabled]="form === 'excluir' ? disabled : false"
+                  
                   class="form-control"
                   [(ngModel)]="pessoa.numeroDoc"
                 />
@@ -67,8 +60,8 @@
                   [(ngModel)]="pessoa.banco"
                 >
                   <option value="undefined">escolha o Banco</option>
-                  <option *ngFor="let banco of ListaBancos" [value]="banco">
-                    {{ banco }}
+                  <option >
+                   banco1 
                   </option>
                 </select>
               </div>
@@ -79,8 +72,8 @@
                   [(ngModel)]="pessoa.situacao"
                 >
                   <option value="undefined">situacao</option>
-                  <option *ngFor="let situacao of ListaSituacoes" [value]="situacao">
-                    {{ situacao }}
+                  <option >
+                    situacao
                   </option>
                 </select>
               </div>
@@ -89,7 +82,7 @@
                   type="text"
                   placeholder="Taxa"
                   aria-label="Taxa"
-                  [disabled]="form === 'excluir' ? disabled : false"
+            
                   class="form-control"
                   [(ngModel)]="pessoa.taxa"
                 />
@@ -160,30 +153,7 @@
       </div>
       <div class="col-md-2">
         <div class="d-grid gap-2">
-          <button
-            *ngIf="form === undefined"
-            type="button"
-            class="btn btn-success"
-            (click)="onClickCadastrar()"
-          >
-            Cadastrar
-          </button>
-          <button
-            *ngIf="form === 'editar'"
-            type="button"
-            class="btn btn-warning"
-            (click)="onClickEditar()"
-          >
-            Editar
-          </button>
-          <button
-            *ngIf="form === 'excluir'"
-            type="button"
-            class="btn btn-danger"
-            (click)="onClickExcluir()"
-          >
-            Excluir
-          </button>
+          
         </div>
       </div>
     </div>

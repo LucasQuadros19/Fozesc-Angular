@@ -1,35 +1,32 @@
 import { Component, OnInit, inject } from '@angular/core';
 import PedidoClient from '../client/PedidoClient';
-import { PedidoModel } from '../model/PedidoModel';
-import { HistoricoModel } from '../model/HistoricoModel';
+import { PedidoModel } from '../../model/PedidoModel';
+import { HistoricoModel } from '../../model/HistoricoModel';
 import HistoricoClient from '../client/HistoricoClient';
 import PessoaClient from '../client/PessoaClient';
-import { Forma } from '../model/Forma';
-import { Destino } from '../model/Destino';
-import { Situacao } from '../model/Situacao';
+import { Forma } from '../../model/Forma';
+import { Destino } from '../../model/Destino';
+import { Situacao } from '../../model/Situacao';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pedido-form',
   templateUrl: './pedido-form.component.html',
-  styleUrls: ['./pedido-form.component.css']
+  styleUrls: ['./pedido-form.component.scss'],
 })
 export class PedidoFormComponent implements OnInit {
-
-  roteador = inject()
-
   pedido: PedidoModel = new PedidoModel();
   PessoaList: any[] = [];
   formas: string[] = Object.values(Forma);
   mensagem = {
     ativo: false,
-    titulo: "",
-    mensagem: "",
-    css: ""
+    titulo: '',
+    mensagem: '',
+    css: '',
   };
   disabled = false;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     if (this.id !== undefined) {
@@ -46,35 +43,32 @@ export class PedidoFormComponent implements OnInit {
     const formQueryParam = this.route.snapshot.queryParamMap.get('form');
     return formQueryParam !== null ? formQueryParam : undefined;
   }
-  
-
 
   onClickCadastrarComposto(): void {
-    this.pedido.parcelas = []; 
+    this.pedido.parcelas = [];
 
     for (let i = 0; i < Number(this.pedido.quantidade); i++) {
       const parcela = new HistoricoModel();
       const data = new Date();
       data.setMonth(data.getMonth() + i + 1);
       parcela.proxPgamaneto = data;
-    
 
       this.pedido.parcelas.push(parcela);
       console.log(parcela);
     }
 
     PedidoClient.cadastrarComposto(this.pedido)
-      .then(retorno => {
+      .then((retorno) => {
         this.pedido = retorno;
         this.mensagem.ativo = true;
-        this.mensagem.mensagem = "sucesso";
-        this.mensagem.titulo = "Parabéns. ";
-        this.mensagem.css = "alert alert-success alert-dismissible fade show";
+        this.mensagem.mensagem = 'sucesso';
+        this.mensagem.titulo = 'Parabéns. ';
+        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
       })
-      .catch(error => {
+      .catch((error) => {
         this.mensagem.ativo = true;
         this.mensagem.mensagem = error.data;
-        this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
       });
   }
 
@@ -87,124 +81,123 @@ export class PedidoFormComponent implements OnInit {
       data.setMonth(data.getMonth() + i + 1);
       parcela.proxPgamaneto = data;
 
-      parcela.operacao = this.pedido; 
-    
+      parcela.operacao = this.pedido;
+
       this.pedido.parcelas.push(parcela);
       console.log(parcela);
     }
-    
 
     PedidoClient.cadastroSimples(this.pedido)
-      .then(success => {
+      .then((success) => {
         this.pedido = new PedidoModel();
         this.mensagem.ativo = true;
-        this.mensagem.mensagem = "sucesso";
-        this.mensagem.titulo = "Parabéns. ";
-        this.mensagem.css = "alert alert-success alert-dismissible fade show";
+        this.mensagem.mensagem = 'sucesso';
+        this.mensagem.titulo = 'Parabéns. ';
+        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
       })
-      .catch(error => {
+      .catch((error) => {
         this.mensagem.ativo = true;
         this.mensagem.mensagem = error.data;
-        this.mensagem.titulo = "Erro. ";
-        this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+        this.mensagem.titulo = 'Erro. ';
+        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
       });
   }
 
   onClickCadastrarDiario(): void {
     PedidoClient.cadastroDiario(this.pedido)
-      .then(success => {
+      .then((success) => {
         this.pedido = new PedidoModel();
         this.mensagem.ativo = true;
         this.mensagem.mensagem = success;
-        this.mensagem.titulo = "Parabéns. ";
-        this.mensagem.css = "alert alert-success alert-dismissible fade show";
+        this.mensagem.titulo = 'Parabéns. ';
+        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
       })
-      .catch(error => {
+      .catch((error) => {
         this.mensagem.ativo = true;
         this.mensagem.mensagem = error.data;
-        this.mensagem.titulo = "Erro. ";
-        this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+        this.mensagem.titulo = 'Erro. ';
+        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
       });
   }
 
   onClickCadastrar(): void {
     PedidoClient.cadastrarComposto(this.pedido)
-      .then(success => {
+      .then((success) => {
         this.pedido = new PedidoModel();
         this.mensagem.ativo = true;
-        this.mensagem.titulo = "Parabéns. ";
-        this.mensagem.css = "alert alert-success alert-dismissible fade show";
+        this.mensagem.titulo = 'Parabéns. ';
+        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
       })
-      .catch(error => {
+      .catch((error) => {
         this.mensagem.ativo = true;
         this.mensagem.mensagem = error.data;
-        this.mensagem.titulo = "Erro. ";
-        this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+        this.mensagem.titulo = 'Erro. ';
+        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
       });
   }
 
   findById(id: number): void {
     PedidoClient.findById(id)
-      .then(success => {
+      .then((success) => {
         this.pedido = success;
       })
-      .catch(error => {
+      .catch((error) => {
         this.mensagem.ativo = true;
         this.mensagem.mensagem = error;
-        this.mensagem.titulo = "Erro. ";
-        this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+        this.mensagem.titulo = 'Erro. ';
+        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
       });
   }
 
   onClickEditar(): void {
     if (this.pedido.id) {
       PedidoClient.editar(this.pedido.id, this.pedido)
-        .then(success => {
+        .then((success) => {
           this.pedido = new PedidoModel();
           this.mensagem.ativo = true;
           this.mensagem.mensagem = success;
-          this.mensagem.titulo = "Parabéns. ";
-          this.mensagem.css = "alert alert-success alert-dismissible fade show";
+          this.mensagem.titulo = 'Parabéns. ';
+          this.mensagem.css = 'alert alert-success alert-dismissible fade show';
         })
-        .catch(error => {
+        .catch((error) => {
           this.mensagem.ativo = true;
           this.mensagem.mensagem = error;
-          this.mensagem.titulo = "Erro. ";
-          this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+          this.mensagem.titulo = 'Erro. ';
+          this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
         });
     } else {
-      console.error("ID da pedido indefinido. Não é possível editar.");
+      console.error('ID da pedido indefinido. Não é possível editar.');
     }
   }
 
   onClickExcluir(): void {
     if (this.pedido.id) {
       PedidoClient.excluir(this.pedido.id)
-        .then(success => {
+        .then((success) => {
           this.pedido = new PedidoModel();
           // this.$router.push({ name: 'pedido-lista-view' });
         })
-        .catch(error => {
+        .catch((error) => {
           this.mensagem.ativo = true;
           this.mensagem.mensagem = error;
-          this.mensagem.titulo = "Erro. ";
-          this.mensagem.css = "alert alert-danger alert-dismissible fade show";
+          this.mensagem.titulo = 'Erro. ';
+          this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
         });
     } else {
-      console.error("ID da pedido indefinido. Não é possível excluir.");
+      console.error('ID da pedido indefinido. Não é possível excluir.');
     }
   }
 
   ListarPessoa(): void {
     PessoaClient.listaAll()
-      .then(success => {
+      .then((success) => {
         this.PessoaList = success;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
-/*
+  /*
   calculoComposto(): any {
     let valorInicial: number = Number(this.pedido.valorDoc);
     let jurosInt: number = Number(this.pedido.juros);

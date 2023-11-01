@@ -1,16 +1,15 @@
-import axios, { AxiosInstance } from "axios";
-import { Situacao } from "../model/Situacao";
- 
+import axios, { AxiosInstance } from 'axios';
+import { Situacao } from '../../model/Situacao';
+
 class SituacaoClient {
   private axiosClient: AxiosInstance;
 
   constructor() {
     this.axiosClient = axios.create({
       baseURL: 'http://localhost:8081/api/situacao',
-      headers: { 'Content-type': 'application/json' }
+      headers: { 'Content-type': 'application/json' },
     });
   }
-
 
   public async findById(id: number): Promise<Situacao> {
     try {

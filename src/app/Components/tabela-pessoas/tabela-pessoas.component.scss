@@ -1,0 +1,25 @@
+
+.bi {
+    background-color: #2b882b;
+  }
+.card-hover:hover {
+  transform: scale(1.02);
+  box-shadow: 1px 1px 6px rgb(159, 158, 158);
+  
+}
+
+
+.carder {
+  border: none;
+  border-radius: 1vh;
+  overflow: hidden; 
+  box-shadow: 1px 1px 6px rgb(213, 213, 213);
+}
+
+tr:nth-child(odd) {
+ background-color:#ffffff;
+ }
+ tr:nth-last-child(even) {
+ background-color:#9b4646;
+ }
+

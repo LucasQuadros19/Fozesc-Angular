@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { PessoaFormComponent } from './Components/pessoa-form/pessoa-form.component';
 import { PedidoFormComponent } from './Components/pedido-form/pedido-form.component';
 
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './Components/nav/nav.component';
@@ -32,12 +33,14 @@ import { TabelaHistoricoComponent } from './Components/tabela-historico/tabela-h
     TabelaPedidosComponent,
     TabelaPessoasComponent,
     TabelaHistoricoComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
