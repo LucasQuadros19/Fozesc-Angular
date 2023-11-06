@@ -1,28 +1,28 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { PessoaModel } from 'src/app/model/PessoaModel';
-import {PessoaServiceService} from 'src/Service/pessoa/pessoa-service.service';
+import { Bancos } from 'src/app/model/Bancos';
+import {BancoserviceService} from 'src/Service/banco/bancoservice.service';
 
 
 @Component({
-  selector: 'app-tabela-pessoas',
-  templateUrl: './tabela-pessoas.component.html',
-  styleUrls: ['./tabela-pessoas.component.scss']
+  selector: 'app-tabela-banco',
+  templateUrl: './tabela-banco.component.html',
+  styleUrls: ['./tabela-banco.component.scss']
 })
-export class TabelaPessoasComponent {
+export class TabelaBancoComponent {
 
-  lista: PessoaModel[] = [];
+  lista: Bancos[] = [];
 
-  @Output() retorno = new EventEmitter<PessoaModel>();
+  @Output() retorno = new EventEmitter<Bancos>();
   @Input() modoLancamento: boolean = false;
 
 
-  objetoSelecionadoParaEdicao: PessoaModel = new PessoaModel();
+  objetoSelecionadoParaEdicao: Bancos = new Bancos();
   indiceSelecionadoParaEdicao!: number;
 
   modalService = inject(NgbModal);
   modalRef!: NgbModalRef;
-  Service = inject(PessoaServiceService);
+  Service = inject(BancoserviceService);
 
   constructor() {
 
@@ -48,7 +48,7 @@ export class TabelaPessoasComponent {
   // MÉTODOS DA MODAL
 
   adicionar(modal: any) {
-    this.objetoSelecionadoParaEdicao = new PessoaModel();
+    this.objetoSelecionadoParaEdicao = new Bancos();
     this.indiceSelecionadoParaEdicao = -1;
 
     this.modalRef = this.modalService.open(modal, { size: 'lg' });
@@ -56,14 +56,14 @@ export class TabelaPessoasComponent {
 
 
 
-  editar(modal: any, produto: PessoaModel, indice: number) {
+  editar(modal: any, produto: Bancos, indice: number) {
     this.objetoSelecionadoParaEdicao = Object.assign({}, produto);
     this.indiceSelecionadoParaEdicao = indice;
 
-    this.modalRef = this.modalService.open(modal, { size: 'sm' });
+    this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
 
-  addOuEditarProduto(produto: PessoaModel) {
+  addOuEditarProduto(produto: Bancos) {
 
     this.listAll();
 
@@ -71,7 +71,7 @@ export class TabelaPessoasComponent {
   }
 
 
-  lancamento(produto: PessoaModel){
+  lancamento(produto: Bancos){
     this.retorno.emit(produto);
   }
 

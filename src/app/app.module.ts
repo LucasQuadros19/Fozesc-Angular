@@ -18,6 +18,14 @@ import { HistoricoComponent } from './Views/historico/historico.component';
 import { TabelaPedidosComponent } from './Components/tabela-pedidos/tabela-pedidos.component';
 import { TabelaPessoasComponent } from './Components/tabela-pessoas/tabela-pessoas.component';
 import { TabelaHistoricoComponent } from './Components/tabela-historico/tabela-historico.component';
+import { TabelaBancoComponent } from './componentes/others/tabela-banco/tabela-banco.component';
+import { BancoFormComponent } from './Components/others/banco-form/banco-form.component';
+import { EnderecoFormComponent } from './Components/others/endereco-form/endereco-form.component';
+import { TabelaEnderecoComponent } from './Components/others/tabela-endereco/tabela-endereco.component';
+import { TabelaSituacaoComponent } from './Components/others/tabela-situacao/tabela-situacao.component';
+import { SituacaoFormComponent } from './Components/others/situacao-form/situacao-form.component';
+import { FormaPagamentoFormComponent } from './Components/others/forma-pagamento-form/forma-pagamento-form.component';
+import { TabelaFormaPagamentoComponent } from './Components/others/tabela-forma-pagamento/tabela-forma-pagamento.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +40,15 @@ import { TabelaHistoricoComponent } from './Components/tabela-historico/tabela-h
     HistoricoComponent,
     TabelaPedidosComponent,
     TabelaPessoasComponent,
-    TabelaHistoricoComponent
+    TabelaHistoricoComponent,
+    TabelaBancoComponent,
+    BancoFormComponent,
+    EnderecoFormComponent,
+    TabelaEnderecoComponent,
+    TabelaSituacaoComponent,
+    SituacaoFormComponent,
+    FormaPagamentoFormComponent,
+    TabelaFormaPagamentoComponent
 
   ],
   imports: [
