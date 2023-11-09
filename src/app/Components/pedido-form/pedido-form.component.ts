@@ -1,202 +1,39 @@
-import { Component, OnInit, inject } from '@angular/core';
-import PedidoClient from '../client/PedidoClient';
-import { PedidoModel } from '../../model/PedidoModel';
-import { HistoricoModel } from '../../model/HistoricoModel';
-import HistoricoClient from '../client/HistoricoClient';
-import PessoaClient from '../client/PessoaClient';
-import { Forma } from '../../model/Forma';
-import { Destino } from '../../model/Destino';
-import { Situacao } from '../../model/Situacao';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { PedidoModel } from 'src/app/model/PedidoModel';
+import {PedidoServiceService} from 'src/Service/pedido/pedido-service.service';
+
 
 @Component({
   selector: 'app-pedido-form',
   templateUrl: './pedido-form.component.html',
   styleUrls: ['./pedido-form.component.scss'],
 })
-export class PedidoFormComponent implements OnInit {
-  pedido: PedidoModel = new PedidoModel();
-  PessoaList: any[] = [];
-  formas: string[] = Object.values(Forma);
-  mensagem = {
-    ativo: false,
-    titulo: '',
-    mensagem: '',
-    css: '',
-  };
-  disabled = false;
+export class PedidoFormComponent{
+  @Input() pedido: PedidoModel = new PedidoModel();
+  @Output() retorno = new EventEmitter<PedidoModel>();
 
-  constructor(private route: ActivatedRoute) {}
+  Service = inject(PedidoServiceService);
+  constructor() {}
+  salvar() {
 
-  ngOnInit(): void {
-    if (this.id !== undefined) {
-      this.findById(Number(this.id));
-    }
-    this.ListarPessoa();
+    this.Service.adicionar(this.pedido).subscribe({
+      next: (pedido) => {
+        console.log("teste funcionando");
+        this.retorno.emit(pedido);
+      },
+      error: (erro) => {
+        console.log("teste erro");
+        console.error(erro);
+      },
+    });
   }
+}
 
-  get id(): number | undefined {
-    return Number(this.route.snapshot.queryParamMap.get('id'));
-  }
 
-  get form(): string | undefined {
-    const formQueryParam = this.route.snapshot.queryParamMap.get('form');
-    return formQueryParam !== null ? formQueryParam : undefined;
-  }
 
-  onClickCadastrarComposto(): void {
-    this.pedido.parcelas = [];
 
-    for (let i = 0; i < Number(this.pedido.quantidade); i++) {
-      const parcela = new HistoricoModel();
-      const data = new Date();
-      data.setMonth(data.getMonth() + i + 1);
-      parcela.proxPgamaneto = data;
-
-      this.pedido.parcelas.push(parcela);
-      console.log(parcela);
-    }
-
-    PedidoClient.cadastrarComposto(this.pedido)
-      .then((retorno) => {
-        this.pedido = retorno;
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = 'sucesso';
-        this.mensagem.titulo = 'Parabéns. ';
-        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
-      })
-      .catch((error) => {
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = error.data;
-        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-      });
-  }
-
-  onClickCadastrarSimples(): void {
-    this.pedido.parcelas = [];
-
-    for (let i = 0; i < Number(this.pedido.quantidade); i++) {
-      const parcela = new HistoricoModel();
-      const data = new Date();
-      data.setMonth(data.getMonth() + i + 1);
-      parcela.proxPgamaneto = data;
-
-      parcela.operacao = this.pedido;
-
-      this.pedido.parcelas.push(parcela);
-      console.log(parcela);
-    }
-
-    PedidoClient.cadastroSimples(this.pedido)
-      .then((success) => {
-        this.pedido = new PedidoModel();
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = 'sucesso';
-        this.mensagem.titulo = 'Parabéns. ';
-        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
-      })
-      .catch((error) => {
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = error.data;
-        this.mensagem.titulo = 'Erro. ';
-        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-      });
-  }
-
-  onClickCadastrarDiario(): void {
-    PedidoClient.cadastroDiario(this.pedido)
-      .then((success) => {
-        this.pedido = new PedidoModel();
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = success;
-        this.mensagem.titulo = 'Parabéns. ';
-        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
-      })
-      .catch((error) => {
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = error.data;
-        this.mensagem.titulo = 'Erro. ';
-        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-      });
-  }
-
-  onClickCadastrar(): void {
-    PedidoClient.cadastrarComposto(this.pedido)
-      .then((success) => {
-        this.pedido = new PedidoModel();
-        this.mensagem.ativo = true;
-        this.mensagem.titulo = 'Parabéns. ';
-        this.mensagem.css = 'alert alert-success alert-dismissible fade show';
-      })
-      .catch((error) => {
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = error.data;
-        this.mensagem.titulo = 'Erro. ';
-        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-      });
-  }
-
-  findById(id: number): void {
-    PedidoClient.findById(id)
-      .then((success) => {
-        this.pedido = success;
-      })
-      .catch((error) => {
-        this.mensagem.ativo = true;
-        this.mensagem.mensagem = error;
-        this.mensagem.titulo = 'Erro. ';
-        this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-      });
-  }
-
-  onClickEditar(): void {
-    if (this.pedido.id) {
-      PedidoClient.editar(this.pedido.id, this.pedido)
-        .then((success) => {
-          this.pedido = new PedidoModel();
-          this.mensagem.ativo = true;
-          this.mensagem.mensagem = success;
-          this.mensagem.titulo = 'Parabéns. ';
-          this.mensagem.css = 'alert alert-success alert-dismissible fade show';
-        })
-        .catch((error) => {
-          this.mensagem.ativo = true;
-          this.mensagem.mensagem = error;
-          this.mensagem.titulo = 'Erro. ';
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-        });
-    } else {
-      console.error('ID da pedido indefinido. Não é possível editar.');
-    }
-  }
-
-  onClickExcluir(): void {
-    if (this.pedido.id) {
-      PedidoClient.excluir(this.pedido.id)
-        .then((success) => {
-          this.pedido = new PedidoModel();
-          // this.$router.push({ name: 'pedido-lista-view' });
-        })
-        .catch((error) => {
-          this.mensagem.ativo = true;
-          this.mensagem.mensagem = error;
-          this.mensagem.titulo = 'Erro. ';
-          this.mensagem.css = 'alert alert-danger alert-dismissible fade show';
-        });
-    } else {
-      console.error('ID da pedido indefinido. Não é possível excluir.');
-    }
-  }
-
-  ListarPessoa(): void {
-    PessoaClient.listaAll()
-      .then((success) => {
-        this.PessoaList = success;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
   /*
   calculoComposto(): any {
     let valorInicial: number = Number(this.pedido.valorDoc);
@@ -256,4 +93,4 @@ export class PedidoFormComponent implements OnInit {
     return { parcela, total, quantidade, valorInicial, juros };
   }
   */
-}
+

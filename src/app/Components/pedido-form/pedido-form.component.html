@@ -1,28 +1,36 @@
 <div>
-    <div *ngIf="mensagem.ativo" class="row">
-      <div class="col-md-12 text-start">
-        <div [ngClass]="mensagem.css" role="alert">
-          <strong>{{ mensagem.titulo }}</strong> {{ mensagem.mensagem }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      </div>
-    </div>
     <div class="container mt-5">
       <div>
         <form id="formulario">
           <div class="mb-3">
             <div class="row justify-content-center">
               <div class="col-md-5 mb-3">
-                <select class="form-select" data-live-search="true" id="aprovacao" name="aprovacao" [(ngModel)]="pedido.cliente">
-                  <option value="undefined">Pessoa</option>
-                  <option *ngFor="let pess of PessoaList" [ngValue]="pess">{{ pess.nome }}</option>
-                </select>
+                
+                <select
+                class="form-select"
+                placeholder="N doc"
+       
+              >
+                <option value="undefined">escolha o Banco</option>
+                <option >
+                 PEssoa 1 
+                </option>
+              </select>
+
               </div>
               <div class="col-md-3 mb-3">
-                <select class="form-select" placeholder="N doc" [(ngModel)]="pedido.formaPaga">
-                  <option *ngFor="let forma of formas" [ngValue]="forma">{{ forma }}</option>
-                  <option value="undefined">Forma de Pagamento</option>
+                
+                <select
+                  class="form-select"
+                  placeholder="N doc"
+              
+                >
+                  <option value="undefined">escolha o Banco</option>
+                  <option >
+                   forma de pagamento 1 
+                  </option>
                 </select>
+
               </div>
             </div>
           </div>
@@ -64,8 +72,7 @@
       </div>
       <div class="col-md-2">
         <div class="d-grid gap-2">
-          <button *ngIf="form === 'Cheque'" type="button" class="btn btn-secondary" (click)="onClickCadastrarDiario()">Incluir Chueque</button>
-        </div>
+          </div>
       </div>
     </div>
   
@@ -102,13 +109,7 @@
       <div class="col-md-2 offset-md-6">
       </div>
       <div class="col-md-2">
-        <div class="d-grid gap-2">
-          <button *ngIf="form === 'Cheque'" type="button" class="btn btn-secondary" (click)="onClickCadastrarDiario()">Cheque</button>
-          <button *ngIf="form === 'Promissoria'" type="button" class="btn btn-secondary" (click)="onClickCadastrarComposto()">Promissoria</button>
-          <button *ngIf="form === 'Cartao'" type="button" class="btn btn-secondary" (click)="onClickCadastrarSimples()">Cartao</button>
-          <button *ngIf="form === 'editar'" type="button" class="btn btn-warning" (click)="onClickEditar()">Editar</button>
-          <button *ngIf="form === 'excluir'" type="button" class="btn btn-danger" (click)="onClickExcluir()">Excluir</button>
-        </div>
+       
       </div>
     </div>
   </div>

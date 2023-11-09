@@ -8,12 +8,12 @@ import { TabelaPessoasComponent } from './Components/tabela-pessoas/tabela-pesso
 import { TabelaBancoComponent } from './Components/others/tabela-banco/tabela-banco.component';
 import { TabelaSituacaoComponent } from './Components/others/tabela-situacao/tabela-situacao.component';
 import { TabelaFormaPagamentoComponent } from './Components/others/tabela-forma-pagamento/tabela-forma-pagamento.component';
-
+import { TabelaPedidosComponent } from './Components/tabela-pedidos/tabela-pedidos.component';
 
 const routes: Routes = [
 
   { path: '', component: TabelaPessoasComponent },
-  {path:'pedidioForm', component:PedidoViewComponent},
+  {path:'pedido', component:TabelaPedidosComponent},
   {path:'simples', component:PedidoViewComponent},
   {path:'composto', component:PedidoViewComponent},
   {path:'diario', component:PedidoViewComponent},

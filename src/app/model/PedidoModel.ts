@@ -1,12 +1,12 @@
 import { AbstractEntity } from "./AbstractEntity"
 import { Destino } from "./Destino"
-import { Forma } from "./Forma"
+import { FormaPagamento } from "./FormaPagamento"
 import { HistoricoModel } from "./HistoricoModel"
 import { PessoaModel } from "./PessoaModel"
 import { Situacao } from "./Situacao"
 export class PedidoModel extends AbstractEntity {
     cliente!:PessoaModel
-    formaPaga!:Forma
+    formaPaga!:FormaPagamento
     valorDoc!:Number
     juros!:Number
     valorLiquido!:Number
@@ -20,4 +20,5 @@ export class PedidoModel extends AbstractEntity {
     observacao!:String
     aprovacao!:boolean
     parcelas!:HistoricoModel[]
+    
 }
