@@ -1,7 +1,7 @@
 
       <div class="container mt-5">
         <div>
-          <form>
+          <form (ngSubmit)="salvar()">
             <div class="mb-3">
               <div class="row justify-content-center">
                 <div class="col-md-8 mb-3">
@@ -9,17 +9,18 @@
                     type="text"
                     placeholder="Nome"
                     aria-label="Nome"
-  
                     class="form-control"
+                    name="teste"
                     [(ngModel)]="banco.banco"
                   />
                 </div>
               </div>
              
             </div>
-            
+            <button type="submit" class="btn btn-primary">Salvar</button>
           </form>
         </div>
+      
       </div>
 
     

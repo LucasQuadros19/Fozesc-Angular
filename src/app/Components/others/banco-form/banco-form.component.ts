@@ -16,10 +16,11 @@ export class BancoFormComponent {
   Service = inject(BancoserviceService);
   constructor() {}
   salvar() {
-
     this.Service.adicionar(this.banco).subscribe({
       next: (banco) => {
+        console.log("ESTA VIVO!!!!");
         this.retorno.emit(banco);
+        
       },
       error: (erro) => {
         console.error(erro);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Bancos } from 'm';
+import { HistoricoModel } from 'src/app/model/HistoricoModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,24 +10,24 @@ export class HistoricoServiceService {
 
   constructor(private http: HttpClient) { }
 
-  listar(): Observable<any[]> {
+  listar(): Observable<HistoricoModel[]> {
     const url = `${this.baseUrl}/listar`;
     return this.http.get<any[]>(url);
   }
 
-  getPorId(id: number): Observable<any> {
+  getPorId(id: number): Observable<HistoricoModel> {
     const url = `${this.baseUrl}/id/${id}`;
     return this.http.get<any>(url);
   }
 
-  adicionar(historico: any): Observable<any> {
+  adicionar(HistoricoModel: any): Observable<any> {
     const url = `${this.baseUrl}/cadastrar`;
-    return this.http.post(url, historico);
+    return this.http.post(url, HistoricoModel);
   }
 
-  atualizar(id: number, historico: any): Observable<any> {
+  atualizar(id: number, HistoricoModel: any): Observable<any> {
     const url = `${this.baseUrl}/put/${id}`;
-    return this.http.put(url, historico);
+    return this.http.put(url, HistoricoModel);
   }
 
   excluir(id: number): Observable<any> {

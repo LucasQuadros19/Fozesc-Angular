@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Bancos } from 'src/app/model/Bancos';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ export class BancoserviceService {
 
   constructor(private http: HttpClient) { }
 
-  listar(): Observable<any[]> {
-    const url = `${this.baseUrl}/listar`;
+  listar(): Observable<Bancos[]> {
+    const url = `${this.baseUrl}/lista`;
     return this.http.get<any[]>(url);
   }
 
-  getPorId(id: number): Observable<any> {
+  getPorId(id: number): Observable<Bancos> {
     const url = `${this.baseUrl}/id/${id}`;
     return this.http.get<any>(url);
   }

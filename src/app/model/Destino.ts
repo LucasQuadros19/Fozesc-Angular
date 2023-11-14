@@ -1,3 +1,4 @@
-export enum Destino{
-    pix, banco
+import { AbstractEntity } from "./AbstractEntity";
+export class Destino extends AbstractEntity{
+    banco!:String;
 }

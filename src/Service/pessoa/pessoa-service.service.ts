@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { PessoaModel } from 'src/app/model/PessoaModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,12 +10,12 @@ export class PessoaServiceService {
 
   constructor(private http: HttpClient) { }
 
-  listar(): Observable<any[]> {
+  listar(): Observable<PessoaModel[]> {
     const url = `${this.baseUrl}/listar`;
     return this.http.get<any[]>(url);
   }
 
-  getPorId(id: number): Observable<any> {
+  getPorId(id: number): Observable<PessoaModel> {
     const url = `${this.baseUrl}/id/${id}`;
     return this.http.get<any>(url);
   }
