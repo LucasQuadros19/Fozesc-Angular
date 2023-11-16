@@ -1,10 +1,10 @@
 
 <div>
-  x
+
   
     <div class="container mt-5">
       <div>
-        <form>
+        <form (ngSubmit)="salvar()">
           <div class="mb-3">
             <div class="row justify-content-center">
               <div class="col-md-8 mb-3">
@@ -12,7 +12,7 @@
                   type="text"
                   placeholder="Nome"
                   aria-label="Nome"
-
+                  name="nome"
                   class="form-control"
                   [(ngModel)]="pessoa.nome"
                 />
@@ -24,7 +24,7 @@
                   type="text"
                   placeholder="RG"
                   aria-label="Limite"
-           
+                  name="rg"
                   class="form-control"
                   [(ngModel)]="pessoa.rg"
                 />
@@ -34,7 +34,7 @@
                   type="text"
                   placeholder="CPF"
                   aria-label="Taxa"
-           
+                  name="cpf"
                   class="form-control"
                   [(ngModel)]="pessoa.cpf"
                 />
@@ -44,7 +44,7 @@
                   type="text"
                   placeholder="N doc"
                   aria-label="N doc"
-                  
+                  name="numeroDoc"
                   class="form-control"
                   [(ngModel)]="pessoa.numeroDoc"
                 />
@@ -54,35 +54,42 @@
           <div class="mb-3">
             <div class="row justify-content-center">
               <div class="col-md-3 mb-3">
-                <select
-                  class="form-select"
-                  placeholder="N doc"
-                  [(ngModel)]="pessoa.banco"
-                >
-                  <option value="undefined">escolha o Banco</option>
-                  <option >
-                   banco1 
+
+
+
+
+                <select class="form-select" [compareWith]="byId" name="bancos" [(ngModel)]="pessoa.banco">
+                  <option value="undefined">Banco</option>
+                  <option *ngFor="let banco of listaBanco" class="w-80" [ngValue]="banco">
+                    {{ banco.banco }}
                   </option>
                 </select>
+
+
               </div>
               <div class="col-md-3 mb-3">
+
+
+
                 <select
                   class="form-select"
-                  placeholder="situacao"
-                  [(ngModel)]="pessoa.situacao"
-                >
-                  <option value="undefined">situacao</option>
-                  <option >
-                    situacao
+                  [compareWith]="byId" [(ngModel)]="pessoa.situacao" name="situacao">
+                  <option value="undefined">Situacao</option>
+                  <option *ngFor="let situacao of listaSituacao"
+                  class="w-80"
+                  [ngValue]="situacao">
+                  {{ situacao.situacao }} 
                   </option>
                 </select>
+
+
               </div>
               <div class="col-md-2 mb-3">
                 <input
                   type="text"
                   placeholder="Taxa"
                   aria-label="Taxa"
-            
+                  name="taxa"
                   class="form-control"
                   [(ngModel)]="pessoa.taxa"
                 />
@@ -97,6 +104,7 @@
                   placeholder="Cidade"
                   aria-label="Cidade"
                   class="form-control"
+                  name="cidade"
                   [(ngModel)]="pessoa.cidade"
                 />
               </div>
@@ -106,6 +114,7 @@
                   placeholder="Bairro"
                   aria-label="Bairro"
                   class="form-control"
+                  name="bairro"
                   [(ngModel)]="pessoa.bairro"
                 />
               </div>
@@ -119,6 +128,7 @@
                   placeholder="Rua"
                   aria-label="Cidade"
                   class="form-control"
+                  name="rua"
                   [(ngModel)]="pessoa.rua"
                 />
               </div>
@@ -128,6 +138,7 @@
                   placeholder="Numero"
                   aria-label="Bairro"
                   class="form-control"
+                  name="numero"
                   [(ngModel)]="pessoa.numero"
                 />
               </div>
@@ -137,18 +148,20 @@
                   placeholder="Cep"
                   aria-label="Bairro"
                   class="form-control"
+                  name="cep"
                   [(ngModel)]="pessoa.cep"
                 />
               </div>
             </div>
           </div>
+          <button type="submit" class="btn btn-primary">Salvar</button>
         </form>
       </div>
     </div>
     <div class="row">
       <div class="col-md-2 offset-md-4">
         <div class="d-grid gap-2">
-          <a routerLink="/condutor/listar" class="btn btn-info">Voltar</a>
+         
         </div>
       </div>
       <div class="col-md-2">

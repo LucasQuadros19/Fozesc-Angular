@@ -7,7 +7,7 @@ import { FormaPagamento } from 'src/app/model/FormaPagamento';
   providedIn: 'root'
 })
 export class FormaPagamentoService {
-  private baseUrl = 'http://localhost:8081/api/cheque'; 
+  private baseUrl = 'http://localhost:8081/api/FormaPagamento'; 
 
   constructor(private http: HttpClient) { }
 

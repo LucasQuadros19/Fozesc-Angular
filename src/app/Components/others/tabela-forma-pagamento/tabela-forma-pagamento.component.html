@@ -9,7 +9,7 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col" class="text-end">Nome</th>
+              <th scope="col" class="text-start">Nome</th>
               <th scope="col">Ativo</th>
               <th scope="col">Opção</th>
             </tr>
@@ -17,7 +17,7 @@
           <tbody>
             <tr *ngFor="let item of lista; let i = index">
               <th scope="row">{{ item.id }}</th>
-              <td>{{ item.FormaPagamento }}</td>
+              <td class="text-start">{{ item.formaPagamento }}</td>
       
               <td>
                 <td *ngIf="!modoLancamento" > <button type="button" class="btn btn-primary" (click)="editar(modal1, item, i)">Editar</button> </td>
