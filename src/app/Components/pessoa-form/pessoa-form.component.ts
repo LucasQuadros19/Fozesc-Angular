@@ -45,6 +45,7 @@ export class PessoaFormComponent   {
     this.situacaoService.listar().subscribe({
       next: (listaSituacao) => {
         console.log(listaSituacao);
+        
         this.listaSituacao = listaSituacao;
       },
       error: (erro) => {
@@ -59,16 +60,15 @@ export class PessoaFormComponent   {
     console.log("testett");
    
     this.Service.adicionar(this.pessoa).subscribe({
-      
       next: (pessoa) => {
         console.log("ESTA VIVO!!!!");
-        console.log(pessoa.situacao);
+        console.log(this.pessoa);
      
         this.retorno.emit(pessoa);
       },
       error: (erro) => {
         console.log("teste erro");
-        console.log(this.pessoa.situacao);
+        console.log(this.pessoa);
         
         console.error(erro);
       },

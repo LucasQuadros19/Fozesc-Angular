@@ -14,5 +14,5 @@ export class PessoaModel extends AbstractEntity {
     bairro!:String
     rua!:String
     numero!:Number
-    taxa!:Number;
+    juros!:Number;
 }

@@ -59,8 +59,7 @@ export class TabelaPessoasComponent {
   editar(modal: any, produto: PessoaModel, indice: number) {
     this.objetoSelecionadoParaEdicao = Object.assign({}, produto);
     this.indiceSelecionadoParaEdicao = indice;
-
-    this.modalRef = this.modalService.open(modal, { size: 'sm' });
+    this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
 
   addOuEditarProduto(produto: PessoaModel) {
