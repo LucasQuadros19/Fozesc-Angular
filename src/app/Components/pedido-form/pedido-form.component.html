@@ -37,30 +37,30 @@
           <div class="mb-3">
             <div class="row justify-content-center">
               <div class="col-md-3 mb-3">
-                <input type="text" placeholder="Banco" class="form-control" [(ngModel)]="pedido.valorDoc">
+                <input type="text" placeholder="Banco" class="form-control" name="valorDoc" [(ngModel)]="pedido.valorDoc">
               </div>
               <div class="col-md-2 mb-3">
-                <input type="text" placeholder="Agencia" class="form-control" [(ngModel)]="pedido.juros">
+                <input type="text" placeholder="Agencia" class="form-control" name="Agencia" [(ngModel)]="pedido.juros">
               </div>
               <div class="col-md-3 mb-3">
-                <input type="text" placeholder="Juros" class="form-control" [(ngModel)]="pedido.juros">
+                <input type="text" placeholder="Juros" class="form-control" name="juros"  [(ngModel)]="pedido.juros">
               </div>
             </div>
           </div>
           <div class="mb-3">
             <div class="row justify-content-center">
               <div class="col-md-5 mb-3">
-                <input type="text" placeholder="Numero do Cheque" class="form-control" [(ngModel)]="pedido.quantidade">
+                <input type="text" placeholder="Numero do Cheque" class="form-control" name="quantidade" [(ngModel)]="pedido.quantidade">
               </div>
               <div class="col-md-3 mb-3">
-                <input type="date" placeholder="Vencimento" class="form-control" [(ngModel)]="pedido.emitente">
+                <input type="date" placeholder="Vencimento" class="form-control" name="emitente" [(ngModel)]="pedido.emitente">
               </div>
             </div>
           </div>
           <div class="mb-3">
             <div class="row justify-content-center">
               <div class="col-md-8 mb-3">
-                <input type="text" placeholder="Observação" aria-label="Observação" class="form-control" [(ngModel)]="pedido.observacao">
+                <input type="text" placeholder="Observação" aria-label="Observação" class="form-control" name="observacao" [(ngModel)]="pedido.observacao">
               </div>
             </div>
           </div>
@@ -75,6 +75,7 @@
           </div>
       </div>
     </div>
+    <button type="button" class="btn btn-primary" (click)="adicionar(modal1)">adicionar chueque</button> 
   
     <div class="container" style="margin-top: 10px">
       <div class="row">
@@ -114,3 +115,19 @@
     </div>
   </div>
   
+
+
+<ng-template #modal1 let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Cadastro de cheque</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+     
+      <app-cheque-cadastro [cheques]="objetoSelecionadoParaEdicao" (retorno)="addOuEditarProduto($event)" ></app-cheque-cadastro>
+      
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

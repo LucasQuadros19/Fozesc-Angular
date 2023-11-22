@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { PedidoModel } from 'src/app/model/PedidoModel';
+import { Cheque } from 'src/app/model/Cheque';
 import {PedidoServiceService} from 'src/Service/pedido/pedido-service.service';
 
 
@@ -11,12 +12,23 @@ import {PedidoServiceService} from 'src/Service/pedido/pedido-service.service';
   styleUrls: ['./pedido-form.component.scss'],
 })
 export class PedidoFormComponent{
+  lista: PedidoModel[] = [];
   @Input() pedido: PedidoModel = new PedidoModel();
   @Output() retorno = new EventEmitter<PedidoModel>();
 
   Service = inject(PedidoServiceService);
-  constructor() {}
+
+  modalService = inject(NgbModal);
+  modalRef!: NgbModalRef;
+
+
+  objetoSelecionadoParaEdicao: Cheque = new Cheque();
+  indiceSelecionadoParaEdicao!: number;
+  constructor() {
+    this.listAll();
+  }
   salvar() {
+   
 
     this.Service.adicionar(this.pedido).subscribe({
       next: (pedido) => {
@@ -29,6 +41,45 @@ export class PedidoFormComponent{
       },
     });
   }
+
+
+  adicionar(modal: any) {
+    this.objetoSelecionadoParaEdicao = new Cheque();
+    this.indiceSelecionadoParaEdicao = -1;
+
+    this.modalRef = this.modalService.open(modal, { size: 'lg' });
+  }
+
+
+
+  editar(modal: any, produto: Cheque, indice: number) {
+    this.objetoSelecionadoParaEdicao = Object.assign({}, produto);
+    this.indiceSelecionadoParaEdicao = indice;
+
+    this.modalRef = this.modalService.open(modal, { size: 'lg' });
+  }
+
+  addOuEditarProduto(produto: Cheque) {
+
+    this.listAll();
+
+    this.modalService.dismissAll();
+  }
+  listAll() {
+
+    this.Service.listar().subscribe({
+      next: lista => { 
+        this.lista = lista;
+      },
+      error: erro => { 
+        alert('Exemplo de tratamento de erro/exception! Observe o erro no console!');
+        console.error(erro);
+      }
+    });
+
+  }
+
+ 
 }
 
 

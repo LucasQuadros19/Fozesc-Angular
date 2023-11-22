@@ -11,7 +11,7 @@ export class ChequeServiceService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<any[]> {
-    const url = `${this.baseUrl}/listar`;
+    const url = `${this.baseUrl}/lista`;
     return this.http.get<any[]>(url);
   }
 

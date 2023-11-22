@@ -1,0 +1,28 @@
+<p>cheque-cadastro </p>
+<form (ngSubmit)="salvar()">
+<div class="mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-3 mb-3">
+      <input type="text" placeholder="numero" class="form-control" name="numero" [(ngModel)]="cheques.numero">
+    </div>
+    <div class="col-md-3 mb-3">
+      <input type="text" placeholder="vencimento" class="form-control" name="vencimento" [(ngModel)]="cheques.vencimento">
+    </div>
+  
+  </div>
+</div>
+<div class="mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-3 mb-3">
+      <input type="text" placeholder="codigo-banco" class="form-control" name="codBanco" [(ngModel)]="cheques.codBanco">
+    </div>
+    <div class="col-md-3 mb-3">
+      <input type="text" placeholder="agencia" class="form-control" name="agencia" [(ngModel)]="cheques.agencia">
+    </div>
+  </div>
+</div>
+
+
+<button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+

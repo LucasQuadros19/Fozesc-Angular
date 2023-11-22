@@ -24,6 +24,7 @@ import { TabelaSituacaoComponent } from './Components/others/tabela-situacao/tab
 import { SituacaoFormComponent } from './Components/others/situacao-form/situacao-form.component';
 import { FormaPagamentoFormComponent } from './Components/others/forma-pagamento-form/forma-pagamento-form.component';
 import { TabelaFormaPagamentoComponent } from './Components/others/tabela-forma-pagamento/tabela-forma-pagamento.component';
+import { ChequeCadastroComponent } from './Components/others/cheque-cadastro/cheque-cadastro.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TabelaFormaPagamentoComponent } from './Components/others/tabela-forma-
     TabelaSituacaoComponent,
     SituacaoFormComponent,
     FormaPagamentoFormComponent,
-    TabelaFormaPagamentoComponent
+    TabelaFormaPagamentoComponent,
+    ChequeCadastroComponent
 
   ],
   imports: [

@@ -11,7 +11,7 @@ export class PedidoServiceService {
   constructor(private http: HttpClient) { }
 
   listar(): Observable<PedidoModel[]> {
-    const url = `${this.baseUrl}/listar`;
+    const url = `${this.baseUrl}/lista`;
     return this.http.get<any[]>(url);
   }
 
