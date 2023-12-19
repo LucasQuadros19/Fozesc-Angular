@@ -1,4 +1,5 @@
 import { AbstractEntity } from "./AbstractEntity"
+import { Cheque } from "./Cheque"
 import { Destino } from "./Destino"
 import { FormaPagamento } from "./FormaPagamento"
 import { HistoricoModel } from "./HistoricoModel"
@@ -9,16 +10,15 @@ export class PedidoModel extends AbstractEntity {
     formaPaga!:FormaPagamento
     valorDoc!:Number
     juros!:Number
-    valorLiquido!:Number
+    amortizacao!:Number
     quantidade!:Number
     total!: Number
-    emitente!:String
-    criacao!:Date
-    vencimento!:Date
-    destino!:Destino
+    cheques!:Cheque[] 
+
     situacao!:Situacao
     observacao!:String
     aprovacao!:boolean
+    
     parcelas!:HistoricoModel[]
     
 }

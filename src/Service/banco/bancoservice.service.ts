@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Bancos } from 'src/app/model/Bancos';
+import { Mensagem } from 'src/app/model/Mensagem';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,9 +21,9 @@ export class BancoserviceService {
     return this.http.get<any>(url);
   }
 
-  adicionar(banco: any): Observable<any> {
+  adicionar(banco: any): Observable<Mensagem> {
     const url = `${this.baseUrl}/cadastrar`;
-    return this.http.post(url, banco);
+    return this.http.post<Mensagem>(url, banco);
   }
 
   atualizar(id: number, banco: any): Observable<any> {

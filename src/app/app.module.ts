@@ -25,6 +25,7 @@ import { SituacaoFormComponent } from './Components/others/situacao-form/situaca
 import { FormaPagamentoFormComponent } from './Components/others/forma-pagamento-form/forma-pagamento-form.component';
 import { TabelaFormaPagamentoComponent } from './Components/others/tabela-forma-pagamento/tabela-forma-pagamento.component';
 import { ChequeCadastroComponent } from './Components/others/cheque-cadastro/cheque-cadastro.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -50,13 +51,17 @@ import { ChequeCadastroComponent } from './Components/others/cheque-cadastro/che
 
   ],
   imports: [
+    
+    NgxMaskDirective, 
+    NgxMaskPipe,
+
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgbModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [provideNgxMask()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

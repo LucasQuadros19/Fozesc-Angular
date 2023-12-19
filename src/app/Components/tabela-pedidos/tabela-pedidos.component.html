@@ -13,8 +13,8 @@
               <th scope="col" class="text-end">Emprestimo</th>
               <th scope="col" class="text-end">Parcelado</th>
               <th scope="col" class="text-end">total</th>
-              <th scope="col" class="text-end">destino</th>
-              <th scope="col" class="text-end">vencimento</th>
+   
+
               <th scope="col" class="text-end">Destino</th>
               <th scope="col" class="text-end">situacao</th>
               <th scope="col">Ativo</th>
@@ -28,9 +28,9 @@
               <td>{{ item.valorDoc }}</td>
               <td>{{ item.quantidade }}</td>
               <td>{{ item.total }}</td>
-              <td>{{ item.destino }}</td>
-              <td>{{ item.vencimento }}</td>
-              <td>{{ item.destino }}</td>
+             
+
+   
               <td>{{ item.situacao }}</td>
               <td>
                 <td *ngIf="!modoLancamento" > <button type="button" class="btn btn-primary" (click)="editar(modal1, item, i)">Editar</button> </td>

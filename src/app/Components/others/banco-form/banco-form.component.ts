@@ -17,9 +17,10 @@ export class BancoFormComponent {
   constructor() {}
   salvar() {
     this.Service.adicionar(this.banco).subscribe({
-      next: (banco) => {
+      next: (mensagem) => { //mensagem 
+
         console.log("ESTA VIVO!!!!");
-        this.retorno.emit(banco);
+        this.retorno.emit(this.banco);
         
       },
       error: (erro) => {

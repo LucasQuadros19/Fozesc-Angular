@@ -1,9 +1,21 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+
 import { PedidoModel } from 'src/app/model/PedidoModel';
+import { PessoaModel } from 'src/app/model/PessoaModel';
+import { Bancos } from 'src/app/model/Bancos';
+import { Situacao } from 'src/app/model/Situacao';
+import { FormaPagamento } from 'src/app/model/FormaPagamento';
 import { Cheque } from 'src/app/model/Cheque';
+import { HistoricoModel } from 'src/app/model/HistoricoModel';
+
+import {HistoricoServiceService} from 'src/Service/historico/historico-service.service';
 import {PedidoServiceService} from 'src/Service/pedido/pedido-service.service';
+import {PessoaServiceService} from 'src/Service/pessoa/pessoa-service.service';
+import {FormaPagamentoService} from 'src/Service/FormaPagamento/forma-pagamento.service';
+import {BancoserviceService} from 'src/Service/banco/bancoservice.service';
+import {SituacaoServiceService} from 'src/Service/situacao/situacao-service.service';
 
 
 @Component({
@@ -13,21 +25,87 @@ import {PedidoServiceService} from 'src/Service/pedido/pedido-service.service';
 })
 export class PedidoFormComponent{
   lista: PedidoModel[] = [];
+  pessoas: PessoaModel[] = [];
+  listaBanco: Bancos[] = [];
+  listaSituacao: Situacao[] = [];
+  listarPagamento: FormaPagamento[] = [];
+
+
   @Input() pedido: PedidoModel = new PedidoModel();
   @Output() retorno = new EventEmitter<PedidoModel>();
 
+  cheque: boolean = true;
+
+  toggleCheque() {
+    this.cheque = !this.cheque;
+  }
+
   Service = inject(PedidoServiceService);
+  pessoaService = inject(PessoaServiceService);
+  situacaoService = inject(SituacaoServiceService);
+  bancoService = inject(BancoserviceService);
+  pagamentoService = inject(FormaPagamentoService);
+
+
 
   modalService = inject(NgbModal);
   modalRef!: NgbModalRef;
-
 
   objetoSelecionadoParaEdicao: Cheque = new Cheque();
   indiceSelecionadoParaEdicao!: number;
   constructor() {
     this.listAll();
+    this.listaPessoa();
+    this.listAllPagamneto();
+    this.listAllSituacao();
+    this.pedido.cheques; [];// gpt
+   
+  
   }
+
+  listAllPagamneto() {
+    this.pagamentoService.listar().subscribe({
+      next: (listarPagamento) => {
+        console.log(listarPagamento);
+        this.listarPagamento = listarPagamento;
+      },
+      error: (erro) => {
+        alert('Erro inesperado, por favor recarregue a página!');
+        console.error(erro);
+      },
+    });
+  }
+
+
+  listAllSituacao() {
+    this.situacaoService.listar().subscribe({
+      next: (listaSituacao) => {
+        console.log(listaSituacao);
+        
+        this.listaSituacao = listaSituacao;
+      },
+      error: (erro) => {
+        alert('Erro inesperado, por favor recarregue a página!');
+        console.error(erro);
+      },
+    });
+  }
+
+
+  listaPessoa() {
+    this.pessoaService.listar().subscribe({
+      next: (pessoas) => {
+        this.pessoas = pessoas;
+      },
+      error: (erro) => {
+        alert('Erro inesperado, por favor recarregue a página!');
+        console.error(erro);
+      },
+    });
+  }
+
   salvar() {
+
    
 
     this.Service.adicionar(this.pedido).subscribe({
@@ -41,30 +119,41 @@ export class PedidoFormComponent{
       },
     });
   }
-
-
   adicionar(modal: any) {
     this.objetoSelecionadoParaEdicao = new Cheque();
     this.indiceSelecionadoParaEdicao = -1;
-
     this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
-
-
-
   editar(modal: any, produto: Cheque, indice: number) {
     this.objetoSelecionadoParaEdicao = Object.assign({}, produto);
     this.indiceSelecionadoParaEdicao = indice;
-
     this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
 
-  addOuEditarProduto(produto: Cheque) {
-
-    this.listAll();
-
-    this.modalService.dismissAll();
+  atualizarParcelas() {
+    this.pedido.parcelas = [];
+    for (let i = 0; i < Number(this.pedido.quantidade); i++) {
+      let parcela = new HistoricoModel();
+      let data = new Date();
+      data.setMonth(data.getMonth() + i + 1);
+      parcela.proxPgamaneto = data;
+      this.pedido.parcelas.push(parcela);
+      console.log(parcela);
+    }
   }
+  
+
+
+  addOuEditarProduto(cheque: Cheque) {
+    if (!this.pedido.cheques) {
+      this.pedido.cheques = []; // Inicializa cheques como um array vazio, se for undefined
+    }
+  
+    this.pedido.cheques.push(cheque);
+    this.modalRef.dismiss();
+  }
+
+
   listAll() {
 
     this.Service.listar().subscribe({
@@ -79,69 +168,32 @@ export class PedidoFormComponent{
 
   }
 
+  preencherDados(): void {
+
+      this.pedido.juros = this.pedido.cliente.juros;
+      this.pedido.situacao = this.pedido.cliente.situacao; 
+      console.log("pessoa"+this.pedido.cliente.situacao.situacao);
+      console.log("pedido"+this.pedido.situacao.situacao);
+   
+  }
+
+  byId(item1: any, item2: any) {
+    return item1 && item2 && item1.id === item2.id;
+  }
+  
+
+  adicionarcliente(pessoa: PessoaModel) {
+    this.pedido.cliente = pessoa;
+  }
+
+  adicionarSituacao(situacao: Situacao) {
+    this.pedido.situacao = situacao;
+  }
+
+  adicionarPagamento(formaPaga: FormaPagamento) {
+    this.pedido.formaPaga = formaPaga;
+  }
+
+
  
 }
-
-
-
-
-  /*
-  calculoComposto(): any {
-    let valorInicial: number = Number(this.pedido.valorDoc);
-    let jurosInt: number = Number(this.pedido.juros);
-    let quantidade: number = Number(this.pedido.quantidade);
-    let jurosDecimal: number = jurosInt / 100.0;
-    let resultado: number;
-
-    if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
-      console.error('Valores inválidos para cálculo.');
-      return { resultado: 0, parcela: 0, quantidade: 0, juros: 0, valorInicial: 0 };
-    }
-
-    if (String(this.pedido.formaPaga) == "Cheque") {
-      resultado = 0;
-      console.log(valorInicial);
-      valorInicial = valorInicial / quantidade;
-      console.log("cada chquue" + valorInicial);
-      for (let i: number = 0; i < quantidade; i++) {
-        let valorCheque: number = valorInicial / ((i + 1) + jurosDecimal);
-        resultado = resultado + valorCheque;
-        console.log(resultado + " chuqe=" + (i + 1));
-      }
-    } else {
-      resultado = valorInicial;
-      for (let i: number = 0; i < quantidade; i++) {
-        let valorJuros: number = resultado * jurosDecimal;
-        resultado = resultado + valorJuros;
-        console.log(resultado);
-      }
-    }
-
-    let juros = resultado - valorInicial;
-    let parcela = resultado / quantidade;
-
-    return { resultado, parcela, quantidade, juros, valorInicial };
-  }
-
-  calculoSimples(): any {
-    const valorInicial: number = Number(this.pedido.valorDoc);
-    const jurosInt: number = Number(this.pedido.juros);
-    const quantidade: number = Number(this.pedido.quantidade);
-    const jurosDecimal: number = jurosInt / 100.0;
-    let juros: number;
-
-    if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
-      console.error('Valores inválidos para cálculo.');
-      return { parcela: 0, total: 0, quantidade: 0, valorInicial: 0, juros: 0 };
-    }
-
-    const valorJuros: number = valorInicial * jurosDecimal;
-    const parcela: number = valorJuros + (valorInicial / quantidade);
-
-    const total: number = parcela * quantidade;
-    juros = total - valorInicial;
-
-    return { parcela, total, quantidade, valorInicial, juros };
-  }
-  */
-

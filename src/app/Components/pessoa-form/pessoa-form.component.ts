@@ -14,7 +14,7 @@ import {SituacaoServiceService} from 'src/Service/situacao/situacao-service.serv
   templateUrl: './pessoa-form.component.html',
   styleUrls: ['./pessoa-form.component.scss'],
 })
-export class PessoaFormComponent   {
+export class PessoaFormComponent {
   @Input() pessoa: PessoaModel = new PessoaModel();
   @Output() retorno = new EventEmitter<PessoaModel>();
 
