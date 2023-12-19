@@ -132,14 +132,17 @@ export class PedidoFormComponent{
 
   atualizarParcelas() {
     this.pedido.parcelas = [];
+    const valorParcela = Number(this.pedido.valorDoc) / Number(this.pedido.quantidade);
+
     for (let i = 0; i < Number(this.pedido.quantidade); i++) {
       let parcela = new HistoricoModel();
       let data = new Date();
       data.setMonth(data.getMonth() + i + 1);
       parcela.proxPgamaneto = data;
+      parcela.valor = valorParcela;
       this.pedido.parcelas.push(parcela);
       console.log(parcela);
-    }
+    } 
   }
   
 

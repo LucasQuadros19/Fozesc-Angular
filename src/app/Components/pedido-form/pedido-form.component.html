@@ -129,12 +129,14 @@
                 <tr>
                   <th scope="col">n*</th>      
                   <th scope="col">proxPgamaneto</th>
+                  <th scope="col">valor da parcela</th>
                 </tr>
               </thead>
               <tbody class="btn:hover">
                 <tr *ngFor="let parcela of pedido.parcelas; let i = index;" class="card-hover fundo">
                   <td>{{i+1}}</td>
                   <td>{{parcela.proxPgamaneto}}</td>
+                  <td>{{parcela.valor}}</td>
                 </tr>
               </tbody>
             </table>

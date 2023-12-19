@@ -3,4 +3,5 @@ import { PedidoModel } from "./PedidoModel"
 export class HistoricoModel extends AbstractEntity {
     operacao!:PedidoModel
     proxPgamaneto!:Date
+    valor!: Number;
 }
