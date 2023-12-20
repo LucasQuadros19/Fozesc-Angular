@@ -134,9 +134,12 @@
               </thead>
               <tbody class="btn:hover">
                 <tr *ngFor="let parcela of pedido.parcelas; let i = index;" class="card-hover fundo">
-                  <td>{{i+1}}</td>
-                  <td>{{parcela.proxPgamaneto}}</td>
-                  <td>{{parcela.valor}}</td>
+                  <td>{{ i + 1 }}</td>
+            <td>{{ parcela.proxPgamaneto ? (parcela.proxPgamaneto | date: 'dd/MM/yyyy') : '0' }}</td>
+            <td>{{ parcela.valor != null ? (parcela.valor.toString() | number: '1.2-2') : '0,00' }}</td>
+
+
+ 
                 </tr>
               </tbody>
             </table>

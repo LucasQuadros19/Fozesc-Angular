@@ -63,6 +63,8 @@ export class PedidoFormComponent{
   
   }
 
+  
+
   listAllPagamneto() {
     this.pagamentoService.listar().subscribe({
       next: (listarPagamento) => {
@@ -70,7 +72,7 @@ export class PedidoFormComponent{
         this.listarPagamento = listarPagamento;
       },
       error: (erro) => {
-        alert('Erro inesperado, por favor recarregue a página!');
+
         console.error(erro);
       },
     });
@@ -85,7 +87,7 @@ export class PedidoFormComponent{
         this.listaSituacao = listaSituacao;
       },
       error: (erro) => {
-        alert('Erro inesperado, por favor recarregue a página!');
+
         console.error(erro);
       },
     });
@@ -98,7 +100,7 @@ export class PedidoFormComponent{
         this.pessoas = pessoas;
       },
       error: (erro) => {
-        alert('Erro inesperado, por favor recarregue a página!');
+
         console.error(erro);
       },
     });
@@ -164,7 +166,7 @@ export class PedidoFormComponent{
         this.lista = lista;
       },
       error: erro => { 
-        alert('Exemplo de tratamento de erro/exception! Observe o erro no console!');
+       
         console.error(erro);
       }
     });
