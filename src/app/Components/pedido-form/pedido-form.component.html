@@ -115,8 +115,11 @@
                 <td>{{cheque.numero}}</td>
                 <td>{{cheque.codBanco}}</td>
                 <td>{{cheque.agencia}}</td>
+                <td>{{convertToDate(cheque.vencimento) | date:'dd/MM/yyyy' }}</td>
+ 
               </tr>
             </tbody>
+            
           </table>
         </div>
       </div>

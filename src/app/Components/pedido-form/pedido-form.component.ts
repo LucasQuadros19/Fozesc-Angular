@@ -59,9 +59,12 @@ export class PedidoFormComponent{
     this.listAllPagamneto();
     this.listAllSituacao();
     this.pedido.cheques; [];// gpt
+    this.convertToDate;
    
   
   }
+
+
 
   
 
@@ -158,6 +161,24 @@ export class PedidoFormComponent{
     this.modalRef.dismiss();
   }
 
+  convertToDate(value: string | number | Date): Date {
+    if (value instanceof Date) {
+      return value;
+    } else if (typeof value === 'string') {
+      // Assumindo que o formato da string é "DDMMYYYY"
+      const day = Number(value.substr(0, 2));
+      const month = Number(value.substr(2, 2)) - 1; // O mês no JavaScript começa do zero
+      const year = Number(value.substr(4, 4));
+  
+      return new Date(year, month, day);
+    } else if (typeof value === 'number') {
+      return new Date(value);
+    } else {
+      // Caso nenhum dos formatos seja válido, você pode retornar uma data padrão ou lidar com isso de acordo com a sua lógica.
+      return new Date();
+    }
+  }
+  
 
   listAll() {
 
