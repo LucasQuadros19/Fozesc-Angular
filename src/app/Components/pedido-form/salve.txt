@@ -1,13 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  inject,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
-
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 
@@ -19,29 +10,31 @@ import { FormaPagamento } from 'src/app/model/FormaPagamento';
 import { Cheque } from 'src/app/model/Cheque';
 import { HistoricoModel } from 'src/app/model/HistoricoModel';
 
-import { HistoricoServiceService } from 'src/Service/historico/historico-service.service';
-import { PedidoServiceService } from 'src/Service/pedido/pedido-service.service';
-import { PessoaServiceService } from 'src/Service/pessoa/pessoa-service.service';
-import { FormaPagamentoService } from 'src/Service/FormaPagamento/forma-pagamento.service';
-import { BancoserviceService } from 'src/Service/banco/bancoservice.service';
-import { SituacaoServiceService } from 'src/Service/situacao/situacao-service.service';
+import {HistoricoServiceService} from 'src/Service/historico/historico-service.service';
+import {PedidoServiceService} from 'src/Service/pedido/pedido-service.service';
+import {PessoaServiceService} from 'src/Service/pessoa/pessoa-service.service';
+import {FormaPagamentoService} from 'src/Service/FormaPagamento/forma-pagamento.service';
+import {BancoserviceService} from 'src/Service/banco/bancoservice.service';
+import {SituacaoServiceService} from 'src/Service/situacao/situacao-service.service';
+
 
 @Component({
   selector: 'app-pedido-form',
   templateUrl: './pedido-form.component.html',
   styleUrls: ['./pedido-form.component.scss'],
 })
-export class PedidoFormComponent implements OnChanges {
+export class PedidoFormComponent{
   lista: PedidoModel[] = [];
   pessoas: PessoaModel[] = [];
   listaBanco: Bancos[] = [];
   listaSituacao: Situacao[] = [];
   listarPagamento: FormaPagamento[] = [];
   somaValores: number = 0;
-  somaComJuros: number = 0;
+ 
 
   @Input() pedido: PedidoModel = new PedidoModel();
   @Output() retorno = new EventEmitter<PedidoModel>();
+
 
   cheque: boolean = true;
 
@@ -55,6 +48,8 @@ export class PedidoFormComponent implements OnChanges {
   bancoService = inject(BancoserviceService);
   pagamentoService = inject(FormaPagamentoService);
 
+
+
   modalService = inject(NgbModal);
   modalRef!: NgbModalRef;
 
@@ -65,56 +60,25 @@ export class PedidoFormComponent implements OnChanges {
     this.listaPessoa();
     this.listAllPagamneto();
     this.listAllSituacao();
-    this.pedido.cheques;
-    []; // gpt
+    this.pedido.cheques; [];// gpt
     this.convertToDate;
-    this.calculoValor(this.pedido.cheques);
-    this.calculoJuros(this.pedido.cheques);
-    this.formatarNumero;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if ('pedido' in changes) {
-      this.atualizarSomaComJuros();
-    }
-  }
-
-  atualizarSomaComJuros(): void {
-    this.somaComJuros = this.calculoJuros(this.pedido.cheques);  /// // // / // / / tirar isso depois 
     
+  this.calculo;
+  
   }
 
-  calculoJuros(cheques: Cheque[] | null | undefined): number {
-    if (!cheques || !Array.isArray(cheques)) {
-      return 0;
-    }
-
+  
+  
+  calculo(cheques: Cheque[]): number {
     let soma = 0;
-
+  
     for (const cheque of cheques) {
-      soma += Number(cheque.valorjuros) || 0;
+      soma += cheque.valor || 0;
     }
-
+  
     return soma;
-  }
-  formatarNumero(valor: number | null | undefined): string {
-    return valor != null ? valor.toFixed(2) : 'N/A';
   }
   
-  calculoValor(cheques: Cheque[] | null | undefined): number {
-    if (!cheques || !Array.isArray(cheques)) {
-      return 0;
-    }
-
-    let soma = 0;
-
-    for (const cheque of cheques) {
-      soma += Number(cheque.valor) || 0;
-    }
-
-    return soma;
-  }
-
   listAllPagamneto() {
     this.pagamentoService.listar().subscribe({
       next: (listarPagamento) => {
@@ -122,23 +86,27 @@ export class PedidoFormComponent implements OnChanges {
         this.listarPagamento = listarPagamento;
       },
       error: (erro) => {
+
         console.error(erro);
       },
     });
   }
+
 
   listAllSituacao() {
     this.situacaoService.listar().subscribe({
       next: (listaSituacao) => {
         console.log(listaSituacao);
-
+        
         this.listaSituacao = listaSituacao;
       },
       error: (erro) => {
+
         console.error(erro);
       },
     });
   }
+
 
   listaPessoa() {
     this.pessoaService.listar().subscribe({
@@ -146,6 +114,7 @@ export class PedidoFormComponent implements OnChanges {
         this.pessoas = pessoas;
       },
       error: (erro) => {
+
         console.error(erro);
       },
     });
@@ -154,11 +123,11 @@ export class PedidoFormComponent implements OnChanges {
   salvar() {
     this.Service.adicionar(this.pedido).subscribe({
       next: (pedido) => {
-        console.log('teste funcionando');
+        console.log("teste funcionando");
         this.retorno.emit(pedido);
       },
       error: (erro) => {
-        console.log('teste erro');
+        console.log("teste erro");
         console.error(erro);
       },
     });
@@ -176,8 +145,7 @@ export class PedidoFormComponent implements OnChanges {
 
   atualizarParcelas() {
     this.pedido.parcelas = [];
-    const valorParcela =
-      Number(this.pedido.valorDoc) / Number(this.pedido.quantidade);
+    const valorParcela = Number(this.pedido.valorDoc) / Number(this.pedido.quantidade);
 
     for (let i = 0; i < Number(this.pedido.quantidade); i++) {
       let parcela = new HistoricoModel();
@@ -187,17 +155,18 @@ export class PedidoFormComponent implements OnChanges {
       parcela.valor = valorParcela;
       this.pedido.parcelas.push(parcela);
       console.log(parcela);
-    }
+    } 
   }
+  
 
   testeinicial(cheque: Cheque) {
     if (!this.pedido.cheques) {
       this.pedido.cheques = [];
     }
-
+  
     this.pedido.cheques.push(cheque);
     this.modalRef.dismiss();
-
+  
     // Exiba a lista de cheques no console
     console.log('Lista de Cheques:', this.pedido.cheques);
   }
@@ -207,34 +176,14 @@ export class PedidoFormComponent implements OnChanges {
       this.pedido.cheques = [];
     }
   
-    if (!this.pedido.juros) {
-      console.error('Erro: Pedido sem valor de juros.');
-      return; // Aborta a operação se o valor de juros estiver vazio
-    }
-  
-    cheque.vencimento = this.convertToDate(cheque.vencimento);
-  
-    const hoje = new Date();
-    console.log(hoje);
-    console.log(cheque.vencimento.getTime());
-    console.log(hoje.getTime());
-  
-    const diffDias = Math.ceil(
-      (cheque.vencimento.getTime() - hoje.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    //ordem excel
-    let totalMes = diffDias / 30;
-    const jurosDiarios = (Number(this.pedido.juros) || 0) / 100;
-  
-    let cJuros = Number(cheque.valor) * Math.pow(1 + jurosDiarios, totalMes);
-    cheque.valorjuros = cJuros - (Number(cheque.valor) || 0);
-  
-    console.log(cheque.valorjuros);
     this.pedido.cheques.push(cheque);
-  
     this.modalRef.dismiss();
+  
+    // Exiba a lista de cheques no console
+    console.log('Lista de Cheques:', this.pedido.cheques);
   }
   
+
   convertToDate(value: string | number | Date): Date {
     if (value instanceof Date) {
       return value;
@@ -243,7 +192,7 @@ export class PedidoFormComponent implements OnChanges {
       const day = Number(value.substr(0, 2));
       const month = Number(value.substr(2, 2)) - 1; // O mês no JavaScript começa do zero
       const year = Number(value.substr(4, 4));
-
+  
       return new Date(year, month, day);
     } else if (typeof value === 'number') {
       return new Date(value);
@@ -252,28 +201,37 @@ export class PedidoFormComponent implements OnChanges {
       return new Date();
     }
   }
+  
 
   listAll() {
+
     this.Service.listar().subscribe({
-      next: (lista) => {
+      next: lista => { 
         this.lista = lista;
       },
-      error: (erro) => {
+      error: erro => { 
+       
         console.error(erro);
-      },
+      }
     });
+
+    
+
   }
 
   preencherDados(): void {
-    this.pedido.juros = this.pedido.cliente.juros;
-    this.pedido.situacao = this.pedido.cliente.situacao;
-    console.log('pessoa' + this.pedido.cliente.situacao.situacao);
-    console.log('pedido' + this.pedido.situacao.situacao);
+
+      this.pedido.juros = this.pedido.cliente.juros;
+      this.pedido.situacao = this.pedido.cliente.situacao; 
+      console.log("pessoa"+this.pedido.cliente.situacao.situacao);
+      console.log("pedido"+this.pedido.situacao.situacao);
+   
   }
 
   byId(item1: any, item2: any) {
     return item1 && item2 && item1.id === item2.id;
   }
+  
 
   adicionarcliente(pessoa: PessoaModel) {
     this.pedido.cliente = pessoa;
@@ -286,4 +244,11 @@ export class PedidoFormComponent implements OnChanges {
   adicionarPagamento(formaPaga: FormaPagamento) {
     this.pedido.formaPaga = formaPaga;
   }
+
+
+ 
 }
+
+
+ <p>Valor dos Cheques: {{ somaValores }}</p>
+          <p>Soma dos Valores dos Cheques: {{ calculo(pedido.cheques) }}</p>

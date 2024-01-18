@@ -104,24 +104,33 @@
             <thead>
               <tr>
                 <th scope="col">Doc</th>
-                <th scope="col">Cod.Banco</th>
-                <th scope="col">Num Cheque</th>
-                <th scope="col">Valor</th>
+                <th scope="col">numero</th>
+                <th scope="col">valor</th>
+                <th scope="col">juros</th>
+                <th scope="col">vencimento</th>
               </tr>
             </thead>
             <tbody class="btn:hover">
               <tr *ngFor="let cheque of pedido.cheques; let i = index;" class="card-hover fundo">
                 <td>{{i+1}}</td>
                 <td>{{cheque.numero}}</td>
-                <td>{{cheque.codBanco}}</td>
-                <td>{{cheque.agencia}}</td>
+                <td>R${{cheque.valor}}</td>
+                <td>R${{ cheque.valorjuros.toString() | number:'1.2-2' }}</td>
                 <td>{{convertToDate(cheque.vencimento) | date:'dd/MM/yyyy' }}</td>
- 
               </tr>
             </tbody>
             
           </table>
+         
+          
         </div>
+        <p>Soma=R${{ pedido.cheques ? formatarNumero(calculoValor(pedido.cheques)) : 'N/A' }}</p>
+<p>Juros=R${{ pedido.cheques ? formatarNumero(calculoJuros(pedido.cheques)) : 'N/A' }}</p>
+
+
+
+
+        
       </div>
     </div>
       <ng-template #tabelaParcela>
