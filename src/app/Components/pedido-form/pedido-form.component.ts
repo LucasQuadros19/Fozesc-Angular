@@ -40,6 +40,9 @@ export class PedidoFormComponent implements OnChanges {
   somaValores: number = 0;
   somaComJuros: number = 0;
 
+  mostrarAlerta = false;
+
+
   @Input() pedido: PedidoModel = new PedidoModel();
   @Output() retorno = new EventEmitter<PedidoModel>();
 
@@ -65,12 +68,13 @@ export class PedidoFormComponent implements OnChanges {
     this.listaPessoa();
     this.listAllPagamneto();
     this.listAllSituacao();
-    this.pedido.cheques;
-    []; // gpt
+    this.pedido.cheques; []; // gpt
     this.convertToDate;
     this.calculoValor(this.pedido.cheques);
     this.calculoJuros(this.pedido.cheques);
     this.formatarNumero;
+    this.verificarValorDoc;
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -79,6 +83,11 @@ export class PedidoFormComponent implements OnChanges {
     }
   }
 
+
+ 
+  verificarValorDoc() {
+    this.mostrarAlerta = Number(this.pedido.valorDoc) > Number(this.pedido.cliente.limite);
+  }
   atualizarSomaComJuros(): void {
     this.somaComJuros = this.calculoJuros(this.pedido.cheques);
   }
@@ -151,6 +160,11 @@ export class PedidoFormComponent implements OnChanges {
   }
 
   salvar() {
+if(this.mostrarAlerta){
+
+  console.log("nao da pra salvar");
+  return;
+}
     this.Service.adicionar(this.pedido).subscribe({
       next: (pedido) => {
         console.log('teste funcionando');
