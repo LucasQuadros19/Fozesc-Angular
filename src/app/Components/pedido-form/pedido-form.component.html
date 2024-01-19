@@ -115,7 +115,9 @@
                 <td>{{i+1}}</td>
                 <td>{{cheque.numero}}</td>
                 <td>R${{cheque.valor}}</td>
-                <td>R${{ cheque.valorjuros.toString() | number:'1.2-2' }}</td>
+                <td>R${{ cheque.valorJuros.toString() | number:'1.2-2' }}</td>
+
+                <!--  arrumar erro aqui-->
                 <td>{{convertToDate(cheque.vencimento) | date:'dd/MM/yyyy' }}</td>
               </tr>
             </tbody>
@@ -124,11 +126,12 @@
          
           
         </div>
-        <p>Soma=R${{ pedido.cheques ? formatarNumero(calculoValor(pedido.cheques)) : 'N/A' }}</p>
-<p>Juros=R${{ pedido.cheques ? formatarNumero(calculoJuros(pedido.cheques)) : 'N/A' }}</p>
+      
 
 
 
+<p>Soma={{ pedido.cheques ? formatarNumero(calculoValor(pedido.cheques)) : 'N/A' }}</p>
+<p>Juros={{ pedido.cheques ? formatarNumero(calculoJuros(pedido.cheques)) : 'N/A' }}
 
         
       </div>

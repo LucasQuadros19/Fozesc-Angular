@@ -80,8 +80,7 @@ export class PedidoFormComponent implements OnChanges {
   }
 
   atualizarSomaComJuros(): void {
-    this.somaComJuros = this.calculoJuros(this.pedido.cheques);  /// // // / // / / tirar isso depois 
-    
+    this.somaComJuros = this.calculoJuros(this.pedido.cheques);
   }
 
   calculoJuros(cheques: Cheque[] | null | undefined): number {
@@ -92,7 +91,7 @@ export class PedidoFormComponent implements OnChanges {
     let soma = 0;
 
     for (const cheque of cheques) {
-      soma += Number(cheque.valorjuros) || 0;
+      soma += Number(cheque.valorJuros) || 0;
     }
 
     return soma;
@@ -164,10 +163,16 @@ export class PedidoFormComponent implements OnChanges {
     });
   }
   adicionar(modal: any) {
+    if (!this.pedido.juros) {
+      console.error('Erro: Pedido sem valor de juros.');
+      return;
+    }
+
     this.objetoSelecionadoParaEdicao = new Cheque();
     this.indiceSelecionadoParaEdicao = -1;
     this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
+
   editar(modal: any, produto: Cheque, indice: number) {
     this.objetoSelecionadoParaEdicao = Object.assign({}, produto);
     this.indiceSelecionadoParaEdicao = indice;
@@ -203,38 +208,39 @@ export class PedidoFormComponent implements OnChanges {
   }
 
   addOuEditarProduto(cheque: Cheque) {
-    if (!this.pedido.cheques) {
-      this.pedido.cheques = [];
-    }
-  
-    if (!this.pedido.juros) {
-      console.error('Erro: Pedido sem valor de juros.');
-      return; // Aborta a operação se o valor de juros estiver vazio
-    }
-  
-    cheque.vencimento = this.convertToDate(cheque.vencimento);
-  
-    const hoje = new Date();
-    console.log(hoje);
-    console.log(cheque.vencimento.getTime());
-    console.log(hoje.getTime());
-  
-    const diffDias = Math.ceil(
-      (cheque.vencimento.getTime() - hoje.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    //ordem excel
-    let totalMes = diffDias / 30;
-    const jurosDiarios = (Number(this.pedido.juros) || 0) / 100;
-  
-    let cJuros = Number(cheque.valor) * Math.pow(1 + jurosDiarios, totalMes);
-    cheque.valorjuros = cJuros - (Number(cheque.valor) || 0);
-  
-    console.log(cheque.valorjuros);
-    this.pedido.cheques.push(cheque);
-  
-    this.modalRef.dismiss();
+  if (!this.pedido.cheques) {
+    this.pedido.cheques = [];
   }
-  
+
+  if (!this.pedido.juros) {
+    console.error('Erro: Pedido sem valor de juros.');
+    return; // Aborta a operação se o valor de juros estiver vazio
+  }
+  const vencimentoOriginal = cheque.vencimento;
+
+  cheque.vencimento = this.convertToDate(cheque.vencimento);
+
+  const hoje = new Date();
+  console.log(hoje);
+  console.log(cheque.vencimento.getTime());
+  console.log(hoje.getTime());
+
+  const diffDias = Math.ceil(
+    (cheque.vencimento.getTime() - hoje.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  //ordem excel
+  let totalMes = diffDias / 30;
+  const jurosDiarios = (Number(this.pedido.juros) || 0) / 100;
+
+  let cJuros = Number(cheque.valor) * Math.pow(1 + jurosDiarios, totalMes);
+  cheque.valorJuros = cJuros - (Number(cheque.valor) || 0);
+  cheque.vencimento = vencimentoOriginal;
+
+  this.pedido.cheques.push(cheque);
+
+  this.modalRef.dismiss();
+}
+
   convertToDate(value: string | number | Date): Date {
     if (value instanceof Date) {
       return value;
