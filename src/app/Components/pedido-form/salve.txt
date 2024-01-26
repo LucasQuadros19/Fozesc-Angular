@@ -1,8 +1,0 @@
- testeinicial(cheque: Cheque) {
-    if (!this.pedido.cheques) {
-      this.pedido.cheques = [];
-    }
-
-    this.pedido.cheques.push(cheque);
-    this.modalRef.dismiss();
-  }

@@ -70,6 +70,7 @@ export class PedidoFormComponent implements OnChanges {
     this.calculoJuros(this.pedido.cheques);
     this.formatarNumero;
     this.verificarValorDoc;
+    this.testedecalculo();
 
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,6 +78,126 @@ export class PedidoFormComponent implements OnChanges {
       this.atualizarSomaComJuros();
     }
   }
+
+  calculoComposto1() {
+    let valorInicial: number = Number(this.pedido.valorDoc);
+    let jurosInt: number = Number(this.pedido.juros);
+    let quantidade: number = Number(this.pedido.quantidade);
+    let jurosDecimal: number = jurosInt / 100.0;
+    let resultado: number;
+  
+    if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
+      console.error('Valores inválidos para cálculo.');
+      return { resultado: 0, parcela: 0, quantidade: 0, juros: 0, valorInicial: 0 };
+    }
+  
+    if (String(this.pedido.formaPaga) == "Cheque") {
+      resultado = 0;
+      console.log(valorInicial);
+      valorInicial = valorInicial/quantidade;
+      console.log("cada chquue"+valorInicial);
+      for (let i: number = 0; i < quantidade; i++) {
+      let valorCheque:number = valorInicial / ((i+1) + jurosDecimal);  
+      resultado=resultado + valorCheque;
+      console.log(resultado+" chuqe=" +(i+1));
+      }
+    } else {
+      resultado = valorInicial;
+      for (let i: number = 0; i < quantidade; i++) {
+        let valorJuros: number = resultado * jurosDecimal;
+        resultado = resultado + valorJuros;
+        console.log(resultado);
+      }
+    }
+  
+    let juros = resultado - valorInicial;
+    let parcela = resultado / quantidade;
+  
+    return { resultado, parcela, quantidade, juros, valorInicial };
+  }
+
+
+  calculoComposto(
+    valorInicial: number,
+    jurosInt: number,
+    quantidade: number,
+    formaPaga: string
+  ) {
+    let jurosDecimal: number = jurosInt / 100.0;
+    let resultado: number;
+  
+    if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
+      console.error('Valores inválidos para cálculo.');
+      return { resultado: 0, parcela: 0, quantidade: 0, juros: 0, valorInicial: 0 };
+    }
+  
+    if (formaPaga === "Cheque") {
+      resultado = 0;
+      const valorChequeInicial = valorInicial / quantidade;
+  
+      for (let i: number = 0; i < quantidade; i++) {
+        let valorCheque: number = this.calcularValorAPagar(
+          valorChequeInicial,
+          jurosInt,
+          i + 1
+        );
+        resultado = resultado + valorCheque;
+        console.log(resultado + " cheque=" + (i + 1));
+      }
+    } else {
+      resultado = valorInicial;
+      for (let i: number = 0; i < quantidade; i++) {
+        let valorJuros: number = this.calcularValorAPagar(
+          resultado,
+          jurosInt,
+          1
+        );
+        resultado = resultado + valorJuros;
+        console.log(resultado);
+      }
+    }
+  
+    let juros = resultado - valorInicial;
+    let parcela = resultado / quantidade;
+  
+    return { resultado, parcela, quantidade, juros, valorInicial };
+  }
+  
+  calcularValorAPagar(
+    principal: number,
+    taxaDeJuros: number,
+    numeroDeMeses: number
+  ): number {
+    const taxaDeJurosPorPeriodo = taxaDeJuros / 100;
+    const valorAPagar =
+      (principal *
+        taxaDeJurosPorPeriodo *
+        Math.pow(1 + taxaDeJurosPorPeriodo, numeroDeMeses)) /
+      (Math.pow(1 + taxaDeJurosPorPeriodo, numeroDeMeses) - 1);
+  
+    return valorAPagar;
+  }
+  
+
+  calcularValorAPagar1(principal: number, taxaDeJuros: number, numeroDeMeses: number): number {
+    const taxaDeJurosPorPeriodo = taxaDeJuros / 100;
+    const valorAPagar = principal * (taxaDeJurosPorPeriodo * Math.pow(1 + taxaDeJurosPorPeriodo, numeroDeMeses)) /
+        (Math.pow(1 + taxaDeJurosPorPeriodo, numeroDeMeses) - 1);
+
+    return valorAPagar;
+}
+
+testedecalculo(){
+const principal = 1000.0;
+const taxaDeJurosMensal = 12.0;
+const numeroDeMeses = 2;
+
+const valorAPagar = this.calcularValorAPagar(principal, taxaDeJurosMensal, numeroDeMeses);
+console.log(`Valor a pagar: ${valorAPagar.toFixed(2)}`);
+}
+
+
+
 
   verificarValorDoc() {
     this.mostrarAlerta =
@@ -113,6 +234,7 @@ export class PedidoFormComponent implements OnChanges {
   }
 
   atualizarParcelas() {
+    this.calculoComposto;
     this.pedido.parcelas = [];
     const valorParcela =
       Number(this.pedido.valorDoc) / Number(this.pedido.quantidade);
@@ -202,6 +324,15 @@ export class PedidoFormComponent implements OnChanges {
       },
     });
   }
+  testeinicial(cheque: Cheque) {
+    if (!this.pedido.cheques) {
+      this.pedido.cheques = [];
+    }
+
+    this.pedido.cheques.push(cheque);
+    this.modalRef.dismiss();
+  }
+
 
   listAllSituacao() {
     this.situacaoService.listar().subscribe({
