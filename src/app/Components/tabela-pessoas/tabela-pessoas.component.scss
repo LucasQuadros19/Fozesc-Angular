@@ -8,7 +8,6 @@
   
 }
 
-
 .carder {
   border: none;
   border-radius: 1vh;
@@ -22,4 +21,11 @@ tr:nth-child(odd) {
  tr:nth-last-child(even) {
  background-color:#9b4646;
  }
+ .table-zoom {
+  transition: transform 0.3s ease; /* Adiciona uma transição suave para o efeito de zoom */
+}
+
+.table-zoom:hover {
+  transform: scale(1.1); /* Aplica um zoom de 110% quando o mouse passa por cima */
+}
 

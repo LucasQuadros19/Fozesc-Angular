@@ -1,0 +1,53 @@
+/* styles.css ou styles.scss */
+.fullscreen-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f6f8fc; /* cor de fundo vermelho */
+    z-index: -1; /* coloca a div atrás do conteúdo */
+  }
+  
+.bi {
+    background-color: #2b882b;
+}
+
+.card-hover:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 6px rgb(159, 158, 158);
+}
+
+.carder {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 0vh 0vh 1vh 1vh;
+    overflow: hidden; 
+
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tr:nth-last-child(even) {
+    background-color: #9b4646;
+}
+
+.table-zoom {
+    transition: transform 0.3s ease;
+}
+
+.table-zoom:hover {
+    transform: scale(1.01);
+}
+
+.cab{
+   
+    font-size: 110%;
+    background-color: #ffffff;
+    border-radius: 1vh 1vh 0vh 0vh;
+}
+.total{
+    box-shadow: 1px 1px 6px rgb(213, 213, 213);
+}

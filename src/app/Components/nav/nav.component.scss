@@ -1,0 +1,39 @@
+.navcor {
+    background: #080808; /* Define a cor de fundo */
+  }
+
+  .navcor .nav-link {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif; /* Aplica a fonte desejada */
+    color: #e6e6e6; /* Define a cor do texto como cinza claro */
+    transition: color 0.3s; /* Adiciona uma transição suave para mudança de cor */
+    text-decoration: none; /* Remove a decoração padrão dos links */
+    position: relative; /* Define a posição relativa para que a linha fique posicionada corretamente */
+  }
+
+  .navcor .nav-link.active {
+    color: #ffffff; /* Define a cor do texto como vermelho quando o link está ativo */
+  }
+
+  .navcor .nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: transparent;
+    transition: width 0.3s, background-color 0.3s; 
+    position: absolute;
+    bottom: -2px;
+    left: 50%; 
+    transform: translateX(-50%); 
+  }
+
+  .navcor .nav-link.active::after,
+  .navcor .nav-link:hover::after {
+   
+    width: 60%; 
+    background-color: #872987; 
+  }
+  .navbar {
+    border-bottom: 1px solid white; /* Adiciona uma borda branca na parte inferior da navbar */
+  }
+  

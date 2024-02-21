@@ -20,10 +20,17 @@ export class TabelaPedidosComponent {
   modalService = inject(NgbModal);
   modalRef!: NgbModalRef;
   Service = inject(PedidoServiceService);
+  elemento: any;
 
   constructor() {
     this.listAll();
-    //this.exemploErro();
+  }
+
+  ngOnInit(): void {     
+  }
+  
+  ngAfterViewInit(): void {
+      this.elemento.nativeElement.ownerDocument.body.style.backgroundColor = 'red';
   }
 
   listAll() {
@@ -32,36 +39,40 @@ export class TabelaPedidosComponent {
         this.lista = lista;
       },
       error: (erro) => {
-        alert(
-          'Exemplo de tratamento de erro/exception! Observe o erro no console!'
-        );
+        alert('Erro ao carregar os dados da tabela. Por favor, tente novamente.');
         console.error(erro);
       },
     });
   }
-  // MÉTODOS DA MODAL
+   
 
   adicionar(modal: any) {
     this.objetoSelecionadoParaEdicao = new PedidoModel();
     this.indiceSelecionadoParaEdicao = -1;
-
     this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
 
   editar(modal: any, produto: PedidoModel, indice: number) {
     this.objetoSelecionadoParaEdicao = Object.assign({}, produto);
     this.indiceSelecionadoParaEdicao = indice;
-
     this.modalRef = this.modalService.open(modal, { size: 'lg' });
   }
 
   addOuEditarProduto(produto: PedidoModel) {
     this.listAll();
-
     this.modalService.dismissAll();
   }
 
   lancamento(produto: PedidoModel) {
     this.retorno.emit(produto);
+  }
+
+  // Função para calcular o valor total dos pedidos
+  calcularValorTotal(): number {
+    let total = 0;
+    for (let pedido of this.lista) {
+      total += Number(pedido.valorDoc);
+    }
+    return total;
   }
 }

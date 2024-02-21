@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-expand-lg bg-secondary">
+<nav class="navcor navbar navbar-expand-lg ">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Teste</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,14 +8,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active"  routerLink="/">Pessoa</a></li>
-          <li class="nav-item"><a class="nav-link active"  routerLink="/pedido">T-Pedido</a></li>
 
-
-          <li class="nav-item"><a class="nav-link active"  routerLink="/banco">T-banco</a></li>
-          <li class="nav-item"><a class="nav-link active"  routerLink="/situacao">T-situacao</a></li>
-          <li class="nav-item"><a class="nav-link active"  routerLink="/FormaPagamento">T-forma de pagamento</a></li>
-
+          <li class="nav-item"><a class="nav-link" routerLink="/" [ngClass]="{ 'active': isActive('/')}">Pessoa</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/pedido" [ngClass]="{ 'active': isActive('/pedido')}">T-Pedido</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/banco" [ngClass]="{ 'active': isActive('/banco')}">T-banco</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/situacao" [ngClass]="{ 'active': isActive('/situacao')}">T-situacao</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/FormaPagamento" [ngClass]="{ 'active': isActive('/FormaPagamento')}">T-forma de pagamento</a></li>
+       
           
    
       
